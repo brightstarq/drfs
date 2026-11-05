@@ -1,0 +1,3651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Buhold Intermodal B.V. | Tank Storage &amp; Bulk Liquid Logistics</title>
+
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="favicon.png">
+
+<style>
+  /* ===== RESET & BASE ===== */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    color: #1a1a1a; background: #ffffff; line-height: 1.6;
+    font-weight: 600;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { text-decoration: none; color: inherit; }
+  img, svg { max-width: 100%; display: block; }
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+  /* ===== PAGE LOADER ===== */
+  .page-loader {
+    position: fixed; inset: 0;
+    background: #ffffff;
+    z-index: 99999;
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column;
+    opacity: 0; visibility: hidden;
+    transition: opacity .35s ease, visibility .35s ease;
+  }
+  .page-loader.active { opacity: 1; visibility: visible; }
+  .page-loader .loader-inner { display: flex; flex-direction: column; align-items: center; gap: 22px; }
+  .page-loader .loader-logo {
+    height: 60px; width: auto; max-width: 240px;
+    object-fit: contain;
+  }
+  .page-loader .loader-ring {
+    width: 54px; height: 54px; border-radius: 50%;
+    border: 4px solid #E5E7EB;
+    border-top-color: #F58220; border-right-color: #FBBF77;
+    animation: spin 0.9s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .page-loader .loader-text {
+    color: #111111; font-size: 0.82rem; font-weight: 700;
+    letter-spacing: 2.5px; text-transform: uppercase;
+  }
+  .page-loader .loader-text em { color: #F58220; font-style: normal; }
+  .page-loader .loader-bar {
+    width: 200px; height: 3px;
+    background: #E5E7EB;
+    border-radius: 3px; overflow: hidden; margin-top: 4px;
+  }
+  .page-loader .loader-bar span {
+    display: block; height: 100%; width: 0%;
+    background: linear-gradient(90deg, #F58220, #FBBF77);
+    border-radius: 3px;
+    animation: loadbar 2s ease-out forwards;
+  }
+  @keyframes loadbar {
+    0%   { width: 0%; }
+    30%  { width: 45%; }
+    70%  { width: 78%; }
+    100% { width: 100%; }
+  }
+
+  /* ===== TOP BAR ===== */
+  .top-bar {
+    background: #111111; color: #fff; font-size: 0.82rem;
+    padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.08);
+    font-weight: 600;
+  }
+  .top-bar .container {
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 8px;
+  }
+  .top-bar a { color: #D1D5DB; transition: color .2s; font-weight: 600; }
+  .top-bar a:hover { color: #F58220; }
+  .top-bar .contact-info { display: flex; gap: 20px; flex-wrap: wrap; font-weight: 600; }
+  .top-bar .emails { display: flex; gap: 16px; flex-wrap: wrap; }
+
+  /* ===== HEADER / NAV ===== */
+  header {
+    background: #fff; box-shadow: 0 1px 8px rgba(0,0,0,.08);
+    position: sticky; top: 0; z-index: 1000;
+  }
+  .header-inner {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 12px 0; position: relative;
+  }
+  .logo { display: flex; align-items: center; cursor: pointer; line-height: 1.1; }
+  .logo-img {
+    height: 52px; width: auto; max-width: 260px;
+    object-fit: contain;
+    transition: transform .3s ease;
+  }
+  .logo:hover .logo-img { transform: scale(1.03); }
+
+  nav ul { list-style: none; display: flex; gap: 4px; align-items: center; }
+  nav ul li { position: relative; }
+  nav ul li > a {
+    padding: 10px 14px; font-size: 0.88rem; font-weight: 700;
+    color: #1a1a1a; border-radius: 6px; transition: background .2s, color .2s;
+    display: block; white-space: nowrap; cursor: pointer;
+  }
+  nav ul li > a:hover,
+  nav ul li > a.active { background: #FFF7ED; color: #F58220; }
+
+  nav ul li .dropdown {
+    display: none; position: absolute; top: 100%; left: 0;
+    background: #fff; min-width: 250px;
+    box-shadow: 0 12px 32px rgba(0,0,0,.15);
+    border-radius: 10px; padding: 8px 0;
+    border: 1px solid #E5E7EB; z-index: 50;
+  }
+  nav ul li:hover .dropdown { display: block; }
+  nav ul li .dropdown li a {
+    padding: 10px 22px; font-size: 0.85rem; border-radius: 0;
+    font-weight: 600; display: block; color: #1a1a1a;
+  }
+  nav ul li .dropdown li a:hover,
+  nav ul li .dropdown li a.active { background: #FFF7ED; color: #F58220; }
+
+  .nav-cta {
+    background: #F58220 !important; color: #fff !important;
+    padding: 10px 22px !important; border-radius: 6px !important;
+    font-weight: 700 !important;
+  }
+  .nav-cta:hover, .nav-cta.active { background: #D96C10 !important; color: #fff !important; }
+
+  .mobile-toggle {
+    display: none; background: none; border: none;
+    font-size: 1.6rem; cursor: pointer; color: #111111;
+  }
+  .arrow {
+    display: inline-block; font-size: 0.7rem; margin-left: 5px;
+    transition: transform 0.25s ease; vertical-align: middle;
+  }
+
+  /* ===== WHATSAPP FLOATING BUTTON ===== */
+  .whatsapp-float {
+    position: fixed;
+    right: 24px; bottom: 24px;
+    width: 58px; height: 58px;
+    border-radius: 50%;
+    background: #25D366;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 6px 20px rgba(37,211,102,.45);
+    z-index: 9998;
+    transition: transform .25s ease, background .25s ease;
+    animation: waPulse 2.4s infinite;
+  }
+  .whatsapp-float:hover {
+    background: #1EBE5A;
+    transform: scale(1.08);
+    animation-play-state: paused;
+  }
+  .whatsapp-float svg { width: 32px; height: 32px; fill: #ffffff; }
+  .whatsapp-float .wa-tooltip {
+    position: absolute; right: 72px; top: 50%;
+    transform: translateY(-50%) translateX(6px);
+    background: #111111; color: #fff;
+    font-size: 0.76rem; font-weight: 700; letter-spacing: .3px;
+    padding: 8px 14px; border-radius: 8px;
+    white-space: nowrap; opacity: 0; pointer-events: none;
+    transition: opacity .22s ease, transform .22s ease;
+    box-shadow: 0 6px 18px rgba(0,0,0,.25);
+  }
+  .whatsapp-float:hover .wa-tooltip {
+    opacity: 1; transform: translateY(-50%) translateX(0);
+  }
+  @keyframes waPulse {
+    0%   { box-shadow: 0 6px 20px rgba(37,211,102,.45), 0 0 0 0 rgba(37,211,102,.55); }
+    70%  { box-shadow: 0 6px 20px rgba(37,211,102,.45), 0 0 0 16px rgba(37,211,102,0); }
+    100% { box-shadow: 0 6px 20px rgba(37,211,102,.45), 0 0 0 0 rgba(37,211,102,0); }
+  }
+
+  /* ===== PAGE SYSTEM ===== */
+  .page { display: none; }
+  .page.active { display: block; animation: fade .35s ease; }
+  @keyframes fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+  /* ===== IMAGE WRAPPER ===== */
+  .img-wrap {
+    position: relative; overflow: hidden;
+    background: linear-gradient(135deg,#1a1a1a,#333333);
+  }
+  .img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+  /* ===== HERO ===== */
+  .hero {
+    position: relative; overflow: hidden;
+    background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 50%, #333333 100%);
+    color: #fff; padding: 90px 0 0;
+  }
+  .hero-inner {
+    display: grid; grid-template-columns: 1.05fr 1fr;
+    gap: 50px; align-items: center; padding-bottom: 70px;
+  }
+  .hero-content { max-width: 620px; position: relative; z-index: 2; }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(245,130,32,.15);
+    border: 1px solid rgba(245,130,32,.45);
+    color: #FBBF77; font-size: 0.72rem; font-weight: 800;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    padding: 6px 14px; border-radius: 50px; margin-bottom: 20px;
+  }
+  .hero-badge::before {
+    content: ''; width: 6px; height: 6px; border-radius: 50%;
+    background: #F58220; box-shadow: 0 0 8px #F58220;
+  }
+  .hero h1 {
+    font-size: 2.85rem; font-weight: 800; line-height: 1.13;
+    margin-bottom: 20px; letter-spacing: -1.2px;
+  }
+  .hero h1 span { color: #F58220; }
+  .hero p { font-size: 1.05rem; color: #E5E7EB; margin-bottom: 30px; line-height: 1.75; font-weight: 600; }
+  .hero-buttons { display: flex; gap: 14px; flex-wrap: wrap; }
+
+  /* ===== HERO SLIDER ===== */
+  .hero-slider {
+    position: relative; border-radius: 16px; overflow: hidden;
+    box-shadow: 0 30px 60px rgba(0,0,0,.35);
+    border: 1px solid rgba(255,255,255,.12);
+    aspect-ratio: 3 / 2; z-index: 1;
+  }
+  .hero-slider .slides { position: absolute; inset: 0; }
+  .hero-slider .slide {
+    position: absolute; inset: 0; opacity: 0; transition: opacity 1s ease;
+    background: linear-gradient(135deg,#1a1a1a,#333333);
+  }
+  .hero-slider .slide.active { opacity: 1; }
+  .hero-slider .slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .hero-slider .slider-btn {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    width: 40px; height: 40px; border-radius: 50%;
+    background: rgba(0,0,0,.6); color: #fff;
+    border: 1px solid rgba(255,255,255,.25);
+    font-size: 1.4rem; line-height: 1; padding-bottom: 4px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    z-index: 6;
+    transition: background .2s, transform .2s;
+    backdrop-filter: blur(4px);
+  }
+  .hero-slider .slider-btn:hover {
+    background: #F58220;
+    transform: translateY(-50%) scale(1.08);
+  }
+  .hero-slider .slider-btn.prev { left: 12px; }
+  .hero-slider .slider-btn.next { right: 12px; }
+  .hero-slider .slider-dots {
+    position: absolute; bottom: 14px; left: 50%;
+    transform: translateX(-50%);
+    display: flex; gap: 8px; z-index: 6;
+  }
+  .hero-slider .dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: rgba(255,255,255,.4);
+    border: none; cursor: pointer; padding: 0;
+    transition: background .2s, transform .2s;
+  }
+  .hero-slider .dot.active {
+    background: #F58220; transform: scale(1.25);
+    box-shadow: 0 0 10px rgba(245,130,32,.7);
+  }
+
+  .hero-stats {
+    position: relative; z-index: 2;
+    background: rgba(0,0,0,.55);
+    border-top: 1px solid rgba(255,255,255,.08);
+    backdrop-filter: blur(6px);
+  }
+  .hero-stats-inner {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 0; padding: 24px 0;
+  }
+  .hero-stat {
+    text-align: center; padding: 8px 12px;
+    border-right: 1px solid rgba(255,255,255,.08);
+  }
+  .hero-stat:last-child { border-right: none; }
+  .hero-stat .hs-num { font-size: 1.6rem; font-weight: 800; color: #fff; line-height: 1; }
+  .hero-stat .hs-num em { color: #F58220; font-style: normal; }
+  .hero-stat .hs-lbl { font-size: 0.74rem; color: #D1D5DB; margin-top: 6px; letter-spacing: .5px; font-weight: 700; }
+
+  /* ===== PAGE HERO ===== */
+  .page-hero {
+    background: linear-gradient(135deg, #1a1a1a 0%, #333333 100%);
+    color: #fff; padding: 58px 0 52px; position: relative; overflow: hidden;
+  }
+  .page-hero::after {
+    content: ''; position: absolute; right: -80px; top: -80px;
+    width: 320px; height: 320px; border-radius: 50%;
+    background: rgba(245,130,32,0.22);
+  }
+  .page-hero .inner { position: relative; z-index: 1; max-width: 820px; }
+  .breadcrumb { font-size: 0.78rem; color: #D1D5DB; margin-bottom: 14px; letter-spacing: .3px; font-weight: 700; }
+  .breadcrumb a { color: #D1D5DB; cursor: pointer; }
+  .breadcrumb a:hover { color: #F58220; }
+  .breadcrumb span.sep { margin: 0 8px; opacity: .5; }
+  .page-hero h1 {
+    font-size: 2.15rem; font-weight: 800; line-height: 1.2;
+    letter-spacing: -0.5px; margin-bottom: 12px;
+  }
+  .page-hero p { color: #E5E7EB; font-size: 1rem; max-width: 680px; line-height: 1.7; font-weight: 600; }
+
+  /* ===== BUTTONS ===== */
+  .btn {
+    display: inline-block; padding: 14px 32px; border-radius: 8px;
+    font-weight: 700; font-size: 0.92rem; transition: all .25s;
+    cursor: pointer; border: none; font-family: inherit;
+  }
+  .btn-primary { background: #F58220; color: #fff; }
+  .btn-primary:hover {
+    background: #D96C10; transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(245,130,32,.35);
+  }
+  .btn-outline {
+    background: transparent; color: #fff;
+    border: 1.5px solid rgba(255,255,255,.5);
+  }
+  .btn-outline:hover { border-color: #F58220; color: #F58220; background: rgba(245,130,32,.08); }
+  .btn-light { background:#fff; color:#111111; }
+  .btn-light:hover { background:#FFF7ED; color:#F58220; }
+
+  /* ===== SECTION COMMON ===== */
+  section.block { padding: 76px 0; }
+  .bg-white { background: #fff; }
+  .bg-tint { background: #FAFAFA; }
+
+  .section-label {
+    font-size: 0.74rem; font-weight: 800; letter-spacing: 2px;
+    text-transform: uppercase; color: #F58220; margin-bottom: 10px;
+  }
+  .section-title {
+    font-size: 1.95rem; font-weight: 800; color: #111111;
+    margin-bottom: 16px; line-height: 1.25; letter-spacing: -0.5px;
+  }
+  .section-subtitle {
+    font-size: 1rem; color: #374151; max-width: 680px;
+    margin-bottom: 44px; line-height: 1.75; font-weight: 600;
+  }
+
+  /* ===== CARDS GRID ===== */
+  .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap: 24px; }
+  .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px,1fr)); gap: 28px; }
+
+  .card {
+    background: #F9FAFB; border: 1px solid #E5E7EB; border-radius: 12px;
+    transition: all .3s; position: relative;
+    overflow: hidden; display: flex; flex-direction: column; cursor: pointer;
+  }
+  .card::before {
+    content: ''; position: absolute; top: 0; left: 0;
+    width: 4px; height: 100%; background: #F58220;
+    opacity: 0; transition: opacity .3s; z-index: 2;
+  }
+  .card:hover {
+    transform: translateY(-4px); box-shadow: 0 12px 36px rgba(0,0,0,.10);
+    border-color: #FBBF77; background: #fff;
+  }
+  .card:hover::before { opacity: 1; }
+  .card-media {
+    height: 160px; overflow: hidden; position: relative;
+    background: linear-gradient(135deg,#1a1a1a,#333333);
+  }
+  .card-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .card-body { padding: 26px 26px 30px; flex: 1; display: flex; flex-direction: column; }
+  .card h3 { font-size: 1.08rem; font-weight: 800; color: #111111; margin-bottom: 10px; }
+  .card p { font-size: 0.9rem; color: #374151; line-height: 1.7; flex: 1; font-weight: 600; }
+  .card .more {
+    display: inline-block; margin-top: 16px; font-size: 0.82rem;
+    font-weight: 800; color: #F58220;
+  }
+  .card:hover .more { text-decoration: underline; color: #D96C10; }
+
+  /* ===== PORT CARD (Tank Storage page) ===== */
+  .port-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 28px;
+  }
+  .port-card {
+    background: #fff; border: 1px solid #E5E7EB; border-radius: 14px;
+    overflow: hidden; transition: all .3s;
+    display: flex; flex-direction: column;
+  }
+  .port-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 16px 44px rgba(0,0,0,.12);
+    border-color: #FBBF77;
+  }
+  .port-card .port-img {
+    height: 220px; overflow: hidden; position: relative;
+    background: linear-gradient(135deg,#1a1a1a,#333333);
+  }
+  .port-card .port-img img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+    transition: transform .5s ease;
+  }
+  .port-card:hover .port-img img { transform: scale(1.06); }
+  .port-card .port-flag {
+    position: absolute; top: 14px; left: 14px;
+    background: rgba(0,0,0,.7);
+    color: #fff;
+    font-size: 0.7rem; font-weight: 800;
+    letter-spacing: 1px; text-transform: uppercase;
+    padding: 5px 12px; border-radius: 50px;
+    border: 1px solid rgba(245,130,32,.5);
+    backdrop-filter: blur(4px);
+  }
+  .port-card .port-rank {
+    position: absolute; top: 14px; right: 14px;
+    background: #F58220;
+    color: #fff;
+    font-size: 0.7rem; font-weight: 800;
+    letter-spacing: 1px;
+    padding: 5px 12px; border-radius: 50px;
+  }
+  .port-card .port-body { padding: 26px 26px 30px; flex: 1; display: flex; flex-direction: column; }
+  .port-card h3 {
+    font-size: 1.2rem; font-weight: 800; color: #111111;
+    margin-bottom: 6px;
+  }
+  .port-card .port-region {
+    font-size: 0.74rem; font-weight: 800; letter-spacing: 1.4px;
+    text-transform: uppercase; color: #F58220; margin-bottom: 14px;
+  }
+  .port-card p {
+    font-size: 0.9rem; color: #374151; line-height: 1.75;
+    font-weight: 600; margin-bottom: 14px;
+  }
+  .port-card .port-tags {
+    display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto;
+    padding-top: 14px; border-top: 1px solid #F3F4F6;
+  }
+  .port-card .port-tag {
+    font-size: 0.68rem; font-weight: 700;
+    background: #FFF7ED; color: #9A3412;
+    padding: 4px 10px; border-radius: 50px;
+    letter-spacing: .4px;
+  }
+
+  /* ===== FEATURE IMAGE ===== */
+  .feature-media {
+    border-radius: 16px; overflow: hidden;
+    box-shadow: 0 20px 45px rgba(0,0,0,.15);
+    border: 1px solid #E5E7EB;
+    background: #1a1a1a;
+    aspect-ratio: 4 / 3;
+    position: relative;
+  }
+  .feature-media img { width: 100%; height: 100%; object-fit: cover; }
+  .feature-media figcaption {
+    padding: 12px 18px; font-size: .78rem; color: #E5E7EB;
+    background: rgba(0,0,0,.85);
+    border-top: 1px solid rgba(255,255,255,.08);
+    position: absolute; bottom: 0; left: 0; right: 0;
+    font-weight: 700;
+  }
+
+  /* ===== CONTENT LAYOUT ===== */
+  .content-wrap { padding: 64px 0 76px; }
+  .content-grid { display: grid; grid-template-columns: 1fr 340px; gap: 52px; align-items: start; }
+
+  .prose h2 {
+    font-size: 1.4rem; font-weight: 800; color: #111111;
+    margin: 34px 0 14px; letter-spacing: -0.3px;
+  }
+  .prose h2:first-child { margin-top: 0; }
+  .prose h3 { font-size: 1.08rem; font-weight: 800; color: #111111; margin: 24px 0 10px; }
+  .prose p { margin-bottom: 16px; color: #374151; font-size: 0.95rem; line-height: 1.85; font-weight: 600; }
+  .prose ul, .prose ol { margin: 0 0 18px 22px; }
+  .prose li { margin-bottom: 9px; color: #374151; font-size: 0.95rem; line-height: 1.75; font-weight: 600; }
+  .prose strong { color: #111111; font-weight: 800; }
+  .prose a { color: #F58220; font-weight: 700; cursor: pointer; }
+  .prose a:hover { text-decoration: underline; color: #D96C10; }
+
+  .lead {
+    font-size: 1.05rem !important; color: #111111 !important;
+    line-height: 1.8 !important; padding-left: 18px;
+    border-left: 3px solid #F58220; margin-bottom: 26px !important;
+    font-weight: 700 !important;
+  }
+
+  .content-image {
+    margin: 28px 0; border-radius: 12px; overflow: hidden;
+    border: 1px solid #E5E7EB; box-shadow: 0 8px 24px rgba(0,0,0,.08);
+    background: #fff;
+  }
+  .content-image .img-wrap { aspect-ratio: 8 / 3; }
+  .content-image figcaption {
+    padding: 12px 18px; font-size: 0.8rem; color: #374151;
+    background: #F9FAFB; border-top: 1px solid #E5E7EB;
+    font-weight: 700;
+  }
+
+  .sidebar { position: sticky; top: 96px; }
+  .widget {
+    background: #fff; border: 1px solid #E5E7EB;
+    border-radius: 12px; padding: 26px; margin-bottom: 20px;
+  }
+  .widget h4 {
+    font-size: 0.78rem; font-weight: 800; letter-spacing: 1.4px;
+    text-transform: uppercase; color: #F58220; margin-bottom: 16px;
+  }
+  .widget ul { list-style: none; }
+  .widget ul li { margin-bottom: 2px; }
+  .widget ul li a {
+    display: block; padding: 9px 12px; font-size: 0.87rem;
+    color: #374151; border-radius: 6px; transition: all .2s; cursor: pointer;
+    font-weight: 600;
+  }
+  .widget ul li a:hover { background: #FFF7ED; color: #F58220; }
+  .widget ul li a.active { background: #FFF7ED; color: #F58220; font-weight: 800; }
+  .widget.dark {
+    background: linear-gradient(135deg,#1a1a1a,#333333);
+    border: none; color: #fff;
+  }
+  .widget.dark h4 { color: #FBBF77; }
+  .widget.dark p { font-size: 0.87rem; color: #E5E7EB; line-height: 1.7; margin-bottom: 14px; font-weight: 600; }
+  .widget.dark .btn { width: 100%; text-align: center; padding: 12px 20px; font-size: .86rem; }
+  .widget .fact { display: flex; justify-content: space-between; padding: 9px 0; border-bottom: 1px solid #F3F4F6; font-size: .85rem; }
+  .widget .fact:last-child { border-bottom: none; }
+  .widget .fact span:first-child { color: #6B7280; font-weight: 600; }
+  .widget .fact span:last-child { color: #111111; font-weight: 800; text-align: right; }
+
+  .spec-table { width: 100%; border-collapse: collapse; margin: 18px 0 26px; font-size: 0.88rem; }
+  .spec-table th, .spec-table td { padding: 13px 16px; text-align: left; border-bottom: 1px solid #E5E7EB; }
+  .spec-table th {
+    background: #FFF7ED; color: #111111; font-weight: 800;
+    font-size: 0.78rem; letter-spacing: .6px; text-transform: uppercase;
+  }
+  .spec-table td { color: #374151; font-weight: 600; }
+  .spec-table tr:last-child td { border-bottom: none; }
+
+  .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px,1fr)); gap: 24px; margin-top: 40px; }
+  .stat-card {
+    text-align: center; padding: 32px 16px; background: #F9FAFB;
+    border-radius: 12px; border: 1px solid #E5E7EB;
+    position: relative; overflow: hidden;
+  }
+  .stat-card::after {
+    content: ''; position: absolute; left: 50%; transform: translateX(-50%);
+    bottom: 0; width: 32px; height: 3px; background: #F58220; border-radius: 3px 3px 0 0;
+  }
+  .stat-card .stat-number { font-size: 1.9rem; font-weight: 800; color: #111111; line-height: 1; }
+  .stat-card .stat-label { font-size: 0.8rem; color: #374151; margin-top: 8px; font-weight: 700; }
+
+  .info-box {
+    background: #FFF7ED; border-left: 4px solid #F58220;
+    border-radius: 0 10px 10px 0; padding: 22px 26px; margin: 26px 0;
+  }
+  .info-box p { margin-bottom: 0 !important; font-size: 0.92rem !important; color: #111111; font-weight: 600; }
+
+  .checklist { list-style: none; margin: 0 0 20px 0 !important; }
+  .checklist li {
+    position: relative; padding-left: 28px; font-size: .94rem;
+    color: #374151; margin-bottom: 11px; line-height: 1.7; font-weight: 600;
+  }
+  .checklist li::before {
+    content: '✓'; position: absolute; left: 0; top: 0;
+    color: #F58220; font-weight: 800;
+  }
+
+  .cta-band {
+    background: linear-gradient(135deg,#1a1a1a,#333333);
+    border-radius: 16px; padding: 48px 44px; color: #fff;
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 30px; flex-wrap: wrap; position: relative; overflow: hidden;
+  }
+  .cta-band::before {
+    content: ''; position: absolute; top: 0; left: 0;
+    width: 5px; height: 100%; background: #F58220;
+  }
+  .cta-band h2 { font-size: 1.5rem; margin-bottom: 8px; letter-spacing: -0.3px; font-weight: 800; }
+  .cta-band p { color: #E5E7EB; font-size: 0.94rem; max-width: 560px; line-height: 1.7; font-weight: 600; }
+
+  /* ===== NEWS ===== */
+  .news-card {
+    border: 1px solid #E5E7EB; border-radius: 12px; overflow: hidden;
+    transition: all .3s; background: #F9FAFB; display: flex; flex-direction: column;
+  }
+  .news-card:hover {
+    transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,.10);
+    border-color: #FBBF77; background: #fff;
+  }
+  .news-img {
+    height: 170px; position: relative; overflow: hidden;
+    background: linear-gradient(135deg,#1a1a1a,#333333);
+  }
+  .news-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .news-img::after {
+    content: ''; position: absolute; bottom: 0; left: 0;
+    width: 100%; height: 3px;
+    background: linear-gradient(90deg,#F58220,#FBBF77);
+    z-index: 3;
+  }
+  .news-body { padding: 26px; flex: 1; display: flex; flex-direction: column; }
+  .news-tag {
+    font-size: 0.68rem; font-weight: 800; letter-spacing: 1.5px;
+    text-transform: uppercase; color: #F58220; margin-bottom: 9px;
+  }
+  .news-body h3 { font-size: 1rem; font-weight: 800; color: #111111; margin-bottom: 10px; line-height: 1.45; }
+  .news-body p { font-size: 0.86rem; color: #374151; line-height: 1.7; flex: 1; font-weight: 600; }
+  .news-date { font-size: 0.76rem; color: #6B7280; margin-top: 14px; font-weight: 700; }
+
+  /* ===== CONTACT ===== */
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+  .contact-item { display: flex; gap: 16px; align-items: flex-start; margin-bottom: 26px; }
+  .ci-icon {
+    width: 44px; height: 44px; background: #FFF7ED; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem; flex-shrink: 0;
+  }
+  .ci-text h4 { font-size: 0.86rem; font-weight: 800; color: #111111; margin-bottom: 4px; }
+  .ci-text p, .ci-text a { font-size: 0.9rem; color: #374151; line-height: 1.65; font-weight: 600; }
+  .ci-text a:hover { color: #F58220; }
+
+  .contact-form { display: flex; flex-direction: column; gap: 14px; position: relative; }
+  .contact-form input, .contact-form textarea, .contact-form select {
+    width: 100%; padding: 14px 18px; border-radius: 8px;
+    border: 1px solid #D1D5DB; background: #F9FAFB; color: #1a1a1a;
+    font-size: 0.9rem; font-family: inherit; transition: border .2s, background .2s;
+    font-weight: 600;
+  }
+  .contact-form input:focus, .contact-form textarea:focus, .contact-form select:focus {
+    outline: none; border-color: #F58220; background: #fff;
+    box-shadow: 0 0 0 3px rgba(245,130,32,.15);
+  }
+  .contact-form textarea { min-height: 130px; resize: vertical; }
+  .contact-form .btn { align-self: flex-start; padding: 14px 40px; }
+  .contact-form .btn:disabled { opacity: .65; cursor: not-allowed; transform: none; }
+
+  .form-status {
+    display: none;
+    padding: 14px 18px; border-radius: 8px;
+    font-size: 0.88rem; font-weight: 700; line-height: 1.6;
+    margin-top: 4px;
+  }
+  .form-status.success {
+    display: block;
+    background: #FFF7ED; border: 1px solid #FED7AA; color: #9A3412;
+  }
+  .form-status.error {
+    display: block;
+    background: #FEF2F2; border: 1px solid #FECACA; color: #991B1B;
+  }
+
+  /* ===== FOOTER ===== */
+  footer { background: #111111; color: #D1D5DB; padding: 52px 0 24px; font-size: 0.85rem; }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+  .footer-brand .logo { margin-bottom: 16px; }
+  .footer-logo-img {
+    height: 60px; width: auto; max-width: 260px;
+    object-fit: contain; margin-bottom: 16px;
+    background: #ffffff; padding: 8px 14px; border-radius: 8px;
+  }
+  .footer-brand p { font-size: 0.85rem; line-height: 1.75; color: #D1D5DB; max-width: 330px; font-weight: 600; }
+  .footer-col h4 { color: #fff; font-size: 0.84rem; font-weight: 800; margin-bottom: 16px; letter-spacing: .4px; }
+  .footer-col ul { list-style: none; }
+  .footer-col ul li { margin-bottom: 9px; }
+  .footer-col ul li a { color: #D1D5DB; font-size: 0.83rem; transition: color .2s; cursor: pointer; font-weight: 600; }
+  .footer-col ul li a:hover { color: #F58220; }
+  .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,.1); padding-top: 24px;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 12px; font-size: 0.78rem; color: #9CA3AF; font-weight: 600;
+  }
+  .footer-bottom a { color: #D1D5DB; cursor: pointer; }
+  .footer-bottom a:hover { color: #F58220; }
+
+  .split-block {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 52px; align-items: center;
+  }
+  .split-block .split-text h2 {
+    font-size: 1.65rem; font-weight: 800; color: #111111;
+    letter-spacing: -0.4px; margin-bottom: 18px; line-height: 1.25;
+  }
+  .split-block .split-text p {
+    font-size: 0.95rem; color: #374151; line-height: 1.85; margin-bottom: 16px; font-weight: 600;
+  }
+  .split-block .split-text p:last-of-type { margin-bottom: 24px; }
+
+  @media (max-width: 992px) {
+    .content-grid { grid-template-columns: 1fr; gap: 40px; }
+    .sidebar { position: static; }
+    .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .hero-inner { grid-template-columns: 1fr; gap: 40px; padding-bottom: 60px; }
+    .hero h1 { font-size: 2.4rem; }
+    .cta-band { flex-direction: column; align-items: flex-start; }
+    .split-block { grid-template-columns: 1fr; gap: 36px; }
+  }
+
+  @media (max-width: 860px) {
+    .mobile-toggle { display: block; }
+    .logo-img { height: 42px; max-width: 200px; }
+    .footer-logo-img { height: 50px; max-width: 220px; }
+
+    nav ul {
+      display: none; flex-direction: column;
+      position: absolute; top: 100%; left: 0; right: 0;
+      background: #fff; padding: 12px;
+      box-shadow: 0 12px 32px rgba(0,0,0,.15);
+      border-radius: 0 0 12px 12px;
+      gap: 0; max-height: 78vh; overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    nav ul.open { display: flex; }
+    nav ul li { width: 100%; }
+    nav ul li > a {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 13px 14px; font-size: 0.92rem; border-radius: 8px;
+      margin-bottom: 2px;
+    }
+    nav ul li.open > a { background: #FFF7ED; color: #F58220; }
+    nav ul li.open > a .arrow { transform: rotate(180deg); }
+    nav ul li > a.parent-toggle { cursor: pointer; }
+
+    nav ul li .dropdown {
+      display: none; position: static; min-width: 0;
+      background: transparent; border: none; box-shadow: none;
+      padding: 4px 0 10px 0; margin: 0; border-radius: 0;
+    }
+    nav ul li.open > .dropdown { display: block; }
+    nav ul li:hover .dropdown { display: none; }
+    nav ul li.open:hover > .dropdown { display: block; }
+
+    nav ul li .dropdown li { width: 100%; }
+    nav ul li .dropdown li a {
+      display: block; padding: 11px 14px 11px 34px;
+      margin: 0 0 4px 0; font-size: 0.85rem; font-weight: 600;
+      color: #374151; background: #F3F4F6;
+      border-left: 3px solid #D1D5DB; border-radius: 6px;
+      transition: background .2s, border-color .2s, color .2s;
+    }
+    nav ul li .dropdown li a:hover,
+    nav ul li .dropdown li a.active {
+      background: #FFF7ED; border-left-color: #F58220; color: #F58220;
+    }
+    nav ul li .dropdown li:last-child a { margin-bottom: 0; }
+    nav ul li .nav-cta { margin-top: 6px; text-align: center; justify-content: center; }
+
+    .page-hero { padding: 46px 0 42px; }
+    .page-hero h1 { font-size: 1.7rem; }
+    section.block { padding: 56px 0; }
+    .content-wrap { padding: 48px 0 56px; }
+    .footer-grid { grid-template-columns: 1fr; gap: 30px; }
+    .cta-band { padding: 36px 26px; }
+    .hero-stats-inner { grid-template-columns: repeat(2, 1fr); }
+    .hero-stat:nth-child(2) { border-right: none; }
+    .hero-stat { border-bottom: 1px solid rgba(255,255,255,.08); padding: 14px 10px; }
+    .hero-stat:nth-child(3),
+    .hero-stat:nth-child(4) { border-bottom: none; }
+    .hero-slider .slider-btn { width: 34px; height: 34px; font-size: 1.1rem; }
+  }
+
+  @media (max-width: 560px) {
+    .hero { padding: 60px 0 0; }
+    .hero h1 { font-size: 1.85rem; }
+    .hero p { font-size: 0.98rem; }
+    .section-title { font-size: 1.55rem; }
+    .page-hero h1 { font-size: 1.45rem; }
+    .hero-buttons { flex-direction: column; }
+    .hero-buttons .btn { text-align: center; width: 100%; }
+    .btn { text-align: center; }
+    .contact-form .btn { width: 100%; }
+    .grid-3, .grid-2, .port-grid { grid-template-columns: 1fr; }
+    .stats-row { grid-template-columns: 1fr 1fr; }
+    .spec-table { font-size: 0.8rem; }
+    .spec-table th, .spec-table td { padding: 10px 10px; }
+    .split-block .split-text h2 { font-size: 1.35rem; }
+    .logo-img { height: 38px; max-width: 180px; }
+    .footer-logo-img { height: 44px; max-width: 200px; }
+
+    .whatsapp-float { width: 52px; height: 52px; right: 16px; bottom: 16px; }
+    .whatsapp-float svg { width: 28px; height: 28px; }
+    .whatsapp-float .wa-tooltip { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ================= PAGE LOADER ================= -->
+<div class="page-loader" id="pageLoader" aria-hidden="true">
+  <div class="loader-inner">
+    <img class="loader-logo" src="logo.png" alt="Buhold Intermodal">
+    <div class="loader-ring"></div>
+    <div class="loader-text">Loading <em>Buhold Intermodal</em></div>
+    <div class="loader-bar"><span></span></div>
+  </div>
+</div>
+
+<!-- ================= TOP BAR ================= -->
+<div class="top-bar">
+  <div class="container">
+    <div class="contact-info">
+      <span>📍 Louis Braillelaan 80, 2719 EK Zoetermeer, Netherlands</span>
+      <span>📍 Moezelweg 161, 3198 LS Europoort Rotterdam, Netherlands</span>
+      <span>📞 <a href="tel:+31684268854">+31 6 84268854</a></span>
+    </div>
+    <div class="emails">
+      <a href="mailto:info@buhold-intermodal.com">info@buhold-intermodal.com</a>
+      <a href="mailto:Lease@buhold-intermodal.com">Lease@buhold-intermodal.com</a>
+    </div>
+  </div>
+</div>
+
+<!-- ================= HEADER ================= -->
+<header>
+  <div class="container header-inner">
+    <a class="logo" data-go="home">
+      <img class="logo-img" src="logo.png" alt="Buhold Intermodal B.V.">
+    </a>
+
+    <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle navigation">☰</button>
+
+    <nav>
+      <ul id="navMenu">
+        <li><a data-go="home">Home</a></li>
+        <li><a data-go="about">About Us</a></li>
+        <li>
+          <a class="parent-toggle" data-go="services">Our Services <span class="arrow">▾</span></a>
+          <ul class="dropdown">
+            <li><a data-go="services">Services Overview</a></li>
+            <li><a data-go="services/tank-storage">Tank Storage</a></li>
+            <li><a data-go="services/tank-container-logistics">Tank Container Logistics</a></li>
+            <li><a data-go="services/bulk-liquid-transport">Bulk Liquid Transport</a></li>
+            <li><a data-go="services/cargo-handling">Cargo Handling</a></li>
+            <li><a data-go="services/leasing-trading">Leasing &amp; Trading</a></li>
+          </ul>
+        </li>
+        <li>
+          <a class="parent-toggle" data-go="fleet">Our Fleet <span class="arrow">▾</span></a>
+          <ul class="dropdown">
+            <li><a data-go="fleet">Fleet Overview</a></li>
+            <li><a data-go="fleet/iso-tank-containers">ISO Tank Containers</a></li>
+            <li><a data-go="fleet/intermodal-equipment">Intermodal Equipment</a></li>
+            <li><a data-go="fleet/global-network">Global Network</a></li>
+          </ul>
+        </li>
+        <li><a data-go="sustainability">Sustainability</a></li>
+        <li><a data-go="news">News &amp; Insights</a></li>
+        <li><a class="nav-cta" data-go="contact">Contact Us</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="app">
+
+<!-- ============================================================
+     PAGE: HOME
+============================================================ -->
+<section class="page" data-page="home">
+
+  <div class="hero">
+    <div class="container">
+      <div class="hero-inner">
+        <div class="hero-content">
+          <div class="hero-badge">Safe &amp; Reliable Since 1984</div>
+          <h1>Safe &amp; Reliable <span>Bulk Liquid Logistics</span></h1>
+          <p>
+            Buhold Intermodal B.V. is a specialized logistics and storage service provider focused on
+            the safe and efficient transportation, handling, and storage of liquid chemical products.
+            Through our extensive international network of logistics facilities and highly trained
+            professionals, we provide reliable solutions for the handling and distribution of more than
+            3,000 different chemical products annually.
+          </p>
+          <div class="hero-buttons">
+            <a class="btn btn-primary" data-go="services">Explore Our Services</a>
+            <a class="btn btn-outline" data-go="contact">Get in Touch</a>
+          </div>
+        </div>
+
+        <div class="hero-slider" id="heroSlider">
+          <div class="slides">
+            <div class="slide active">
+              <img src="images/slide1.jpg" alt="Tank farm storage terminal at dusk">
+            </div>
+            <div class="slide">
+              <img src="images/slide2.jpg" alt="Chemical tanker ship at Port of Rotterdam">
+            </div>
+            <div class="slide">
+              <img src="images/slide3.jpg" alt="Intermodal tank containers on rail and road">
+            </div>
+          </div>
+
+          <button class="slider-btn prev" aria-label="Previous slide">‹</button>
+          <button class="slider-btn next" aria-label="Next slide">›</button>
+
+          <div class="slider-dots">
+            <button class="dot active" data-slide="0" aria-label="Go to slide 1"></button>
+            <button class="dot" data-slide="1" aria-label="Go to slide 2"></button>
+            <button class="dot" data-slide="2" aria-label="Go to slide 3"></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-stats">
+      <div class="container">
+        <div class="hero-stats-inner">
+          <div class="hero-stat">
+            <div class="hs-num"><em>1984</em></div>
+            <div class="hs-lbl">Year Incorporated</div>
+          </div>
+          <div class="hero-stat">
+            <div class="hs-num">3,000<em>+</em></div>
+            <div class="hs-lbl">Chemical Products Handled</div>
+          </div>
+          <div class="hero-stat">
+            <div class="hs-num"><em>ITCO</em></div>
+            <div class="hs-lbl">Verified Member</div>
+          </div>
+          <div class="hero-stat">
+            <div class="hs-num">4</div>
+            <div class="hs-lbl">Transport Modes Connected</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="block bg-white">
+    <div class="container">
+      <div class="split-block">
+        <div class="split-text">
+          <div class="section-label">Company Overview</div>
+          <h2>International Logistics &amp; Sales Organization</h2>
+          <p>
+            Buhold Intermodal B.V. is an international logistics and sales organization
+            specializing in tank storage, tank container equipment, and bulk liquid logistics
+            solutions.
+          </p>
+          <p>
+            Originally incorporated in 1984, Buhold Intermodal B.V. maintains an active presence
+            and strategic registration within the Port of Rotterdam transport hub, one of Europe's
+            major centers for international logistics and liquid bulk transportation.
+          </p>
+          <p>
+            Our core activities encompass the distribution, development, storage, cargo handling,
+            leasing, and trading of intermodal tank containers designed for the safe and efficient
+            transportation of bulk liquid products worldwide.
+          </p>
+          <p>
+            Buhold Intermodal B.V. is also a verified member of the International Tank Container
+            Organisation (ITCO), supporting our commitment to recognized industry standards,
+            regulatory compliance, operational safety, and responsible tank-container
+            transportation.
+          </p>
+          <p>
+            Through our international network, industry expertise, and logistics capabilities,
+            we provide reliable solutions for the storage, handling, transportation, and global
+            movement of bulk liquid cargo.
+          </p>
+          <a class="btn btn-primary" data-go="about">More About Us</a>
+        </div>
+
+        <figure class="feature-media" style="margin:0;">
+          <img src="images/image7.jpg" alt="Buhold Intermodal — international logistics and tank storage operations">
+          <figcaption>International logistics and bulk liquid operations — Port of Rotterdam hub</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="block bg-tint">
+    <div class="container">
+      <div class="split-block">
+        <figure class="feature-media" style="margin:0;">
+          <img src="images/image8.jpg" alt="Specialized logistics and storage service provider">
+          <figcaption>Specialized chemical logistics — handling over 3,000 products annually</figcaption>
+        </figure>
+
+        <div class="split-text">
+          <div class="section-label">What We Do</div>
+          <h2>Specialized Logistics &amp; Storage Service Provider</h2>
+          <p>
+            Buhold Intermodal B.V. is a specialized logistics and storage service provider
+            focused on the safe and efficient transportation, handling, and storage of liquid
+            chemical products.
+          </p>
+          <p>
+            Through our extensive international network of logistics facilities and highly
+            trained professionals, we provide reliable solutions for the handling and distribution
+            of more than 3,000 different chemical products annually. Our expertise covers a broad
+            range of products, from high-quality specialty chemicals to standard bulk liquids.
+          </p>
+          <p>
+            With a strong commitment to safety, quality, and operational efficiency, Buhold
+            Intermodal B.V. ensures that chemical products are handled, stored, and transported
+            in accordance with applicable industry standards and requirements, from origin to
+            their intended destination.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block bg-white">
+    <div class="container">
+      <div style="max-width:900px;margin:0 auto;text-align:center;">
+        <div class="section-label">Our Commitment</div>
+        <h2 class="section-title">Safe and Reliable</h2>
+        <p style="font-size:1.05rem;color:#374151;line-height:1.85;margin-bottom:18px;font-weight:600;">
+          At Buhold Intermodal B.V., we leave nothing to chance when it comes to the safe and
+          secure handling of your valuable cargo. Our priority is to ensure that every shipment
+          arrives at its destination in the same condition as when it was entrusted to us.
+        </p>
+        <p style="font-size:1.05rem;color:#374151;line-height:1.85;margin-bottom:18px;font-weight:600;">
+          Our highly trained team has extensive expertise in the safe handling, storage, and
+          transportation of chemical products. All on-site operations are supported by
+          experienced safety advisers and field supervisors who possess in-depth knowledge of
+          the specific chemicals we handle.
+        </p>
+        <p style="font-size:1.05rem;color:#374151;line-height:1.85;margin-bottom:18px;font-weight:600;">
+          Furthermore, our operations are conducted in strict accordance with applicable
+          policies, legal requirements, industry standards, and local regulations. This ensures
+          that every aspect of our services meets the highest relevant safety, quality, and
+          compliance standards.
+        </p>
+        <p style="font-size:1.05rem;color:#111111;font-weight:800;line-height:1.85;margin-bottom:30px;">
+          With Buhold Intermodal B.V., your cargo is handled with professionalism, care, and a
+          strong commitment to safety at every stage.
+        </p>
+
+        <div class="stats-row" style="text-align:left;">
+          <div class="stat-card"><div class="stat-number">1984</div><div class="stat-label">Established</div></div>
+          <div class="stat-card"><div class="stat-number">3,000+</div><div class="stat-label">Chemical Products Handled</div></div>
+          <div class="stat-card"><div class="stat-number">ITCO</div><div class="stat-label">Verified Member</div></div>
+          <div class="stat-card"><div class="stat-number">Rotterdam</div><div class="stat-label">Strategic Logistics Hub</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block bg-tint">
+    <div class="container">
+      <div class="section-label">Our Services</div>
+      <h2 class="section-title">Comprehensive Tank Storage &amp; Logistics Solutions</h2>
+      <p class="section-subtitle">
+        Our core activities encompass the distribution, development, storage, cargo handling,
+        leasing, and trading of intermodal tank containers designed for the safe and efficient
+        transportation of bulk liquid products worldwide.
+      </p>
+
+      <div class="grid-3">
+        <a class="card" data-go="services/tank-storage">
+          <div class="card-media">
+            <img src="images/image1.jpg" alt="Tank storage facility">
+          </div>
+          <div class="card-body">
+            <h3>Tank Storage</h3>
+            <p>Safe and efficient storage of liquid chemical products within an international
+               network of logistics facilities, operated in accordance with applicable industry
+               standards and requirements.</p>
+            <span class="more">Learn more →</span>
+          </div>
+        </a>
+
+        <a class="card" data-go="services/tank-container-logistics">
+          <div class="card-media">
+            <img src="images/image2.jpg" alt="Tank container logistics truck">
+          </div>
+          <div class="card-body">
+            <h3>Tank Container Logistics</h3>
+            <p>End-to-end intermodal logistics for bulk liquids, combining road, rail, barge and
+               sea transport with depot services and full documentation support.</p>
+            <span class="more">Learn more →</span>
+          </div>
+        </a>
+
+        <a class="card" data-go="services/bulk-liquid-transport">
+          <div class="card-media">
+            <img src="images/image3.jpg" alt="Chemical tanker ship">
+          </div>
+          <div class="card-body">
+            <h3>Bulk Liquid Transport</h3>
+            <p>Reliable handling and distribution of more than 3,000 different chemical products
+               annually — from high-quality specialty chemicals to standard bulk liquids.</p>
+            <span class="more">Learn more →</span>
+          </div>
+        </a>
+
+        <a class="card" data-go="services/cargo-handling">
+          <div class="card-media">
+            <img src="images/image4.jpg" alt="Cargo handling terminal">
+          </div>
+          <div class="card-body">
+            <h3>Cargo Handling</h3>
+            <p>Highly trained teams and experienced safety advisers ensure every shipment is
+               handled and stored in compliance with local regulations and industry requirements.</p>
+            <span class="more">Learn more →</span>
+          </div>
+        </a>
+
+        <a class="card" data-go="services/leasing-trading">
+          <div class="card-media">
+            <img src="images/image5.jpg" alt="Tank container leasing yard">
+          </div>
+          <div class="card-body">
+            <h3>Leasing &amp; Trading</h3>
+            <p>Distribution, development, leasing and trading of intermodal tank containers,
+               tailored to your specific bulk liquid transportation requirements.</p>
+            <span class="more">Learn more →</span>
+          </div>
+        </a>
+
+        <a class="card" data-go="fleet/global-network">
+          <div class="card-media">
+            <img src="images/image6.jpg" alt="Global logistics network">
+          </div>
+          <div class="card-body">
+            <h3>Global Network</h3>
+            <p>Strategic presence in the Port of Rotterdam and an extensive international network
+               of logistics facilities supporting global bulk liquid movements.</p>
+            <span class="more">Learn more →</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="block bg-white">
+    <div class="container">
+      <div class="cta-band">
+        <div>
+          <h2>Ready to move your bulk liquid cargo?</h2>
+          <p>Speak with our team about tank storage, tank container logistics, leasing, or
+             global bulk liquid transportation requirements.</p>
+        </div>
+        <a class="btn btn-light" data-go="contact">Contact Us →</a>
+      </div>
+    </div>
+  </section>
+</section>
+
+<!-- ============================================================
+     PAGE: ABOUT US
+============================================================ -->
+<section class="page" data-page="about">
+  <div class="page-hero">
+    <div class="container">
+      <div class="inner">
+        <div class="breadcrumb"><a data-go="home">Home</a><span class="sep">/</span>About Us</div>
+        <h1>About Buhold Intermodal B.V.</h1>
+        <p>An international logistics and sales organization specializing in tank storage,
+           tank container equipment, and bulk liquid logistics solutions — incorporated in 1984
+           and registered within the Port of Rotterdam transport hub.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-wrap bg-white">
+    <div class="container">
+      <div class="content-grid">
+        <div class="prose">
+          <p class="lead">
+            Buhold Intermodal B.V. is an international logistics and sales organization
+            specializing in tank storage, tank container equipment, and bulk liquid logistics
+            solutions.
+          </p>
+
+          <h2>Company Profile</h2>
+          <p>
+            Buhold Intermodal B.V. is an international logistics and sales organization
+            specializing in tank storage, tank container equipment, and bulk liquid logistics
+            solutions. Originally incorporated in 1984, the company maintains an active presence
+            and strategic registration within the Port of Rotterdam transport hub — one of
+            Europe's major centers for international logistics and liquid bulk transportation.
+          </p>
+          <p>
+            Our core activities encompass the distribution, development, storage, cargo handling,
+            leasing, and trading of intermodal tank containers designed for the safe and efficient
+            transportation of bulk liquid products worldwide. Buhold Intermodal B.V. is also a
+            verified member of the International Tank Container Organisation (ITCO), supporting
+            our commitment to recognized industry standards, regulatory compliance, operational
+            safety, and responsible tank-container transportation.
+          </p>
+          <p>
+            Through our international network, industry expertise, and logistics capabilities,
+            we provide reliable solutions for the storage, handling, transportation, and global
+            movement of bulk liquid cargo.
+          </p>
+
+          <h2>Specialized Logistics &amp; Storage Service Provider</h2>
+          <p>
+            Buhold Intermodal B.V. is a specialized logistics and storage service provider
+            focused on the safe and efficient transportation, handling, and storage of liquid
+            chemical products.
+          </p>
+          <p>
+            Through our extensive international network of logistics facilities and highly
+            trained professionals, we provide reliable solutions for the handling and
+            distribution of more than 3,000 different chemical products annually. Our expertise
+            covers a broad range of products, from high-quality specialty chemicals to standard
+            bulk liquids.
+          </p>
+          <p>
+            With a strong commitment to safety, quality, and operational efficiency, Buhold
+            Intermodal B.V. ensures that chemical products are handled, stored, and transported
+            in accordance with applicable industry standards and requirements, from origin to
+            their intended destination.
+          </p>
+
+          <h2>Our History</h2>
+          <p>
+            Founded in 1984, Buhold Intermodal B.V. has grown from its Dutch roots into an
+            internationally oriented logistics and trading organization. Over four decades the
+            company has built a position at the intersection of tank storage, tank container
+            equipment, and bulk liquid logistics — a position reinforced by a strategic
+            registration and active presence in the Port of Rotterdam, Europe's largest port and
+            a global gateway for liquid bulk cargo.
+          </p>
+          <p>
+            Registered at the Dutch Chamber of Commerce (KvK) under number
+            <strong>27223463</strong> and operating from its head office in Zoetermeer, the
+            company combines commercial trading and leasing activities with operational logistics
+            services, serving clients who require dependable movement and storage of chemical and
+            bulk liquid products.
+          </p>
+
+          <h2>What We Do</h2>
+          <p>Our activities are organized around four closely connected pillars:</p>
+          <ul>
+            <li><strong>Tank storage</strong> — safe, compliant storage of liquid chemical products
+                within an international network of logistics facilities.</li>
+            <li><strong>Tank container equipment</strong> — distribution, development, leasing and
+                trading of intermodal tank containers for bulk liquid transportation.</li>
+            <li><strong>Bulk liquid logistics</strong> — handling, storage and multimodal
+                transportation of chemical products from origin to destination.</li>
+            <li><strong>Trailer trade &amp; repair</strong> — trade in and repair of semi-trailers
+                and trailers (excluding caravans), supporting the intermodal equipment side of
+                the business.</li>
+          </ul>
+
+          <h2>Safe and Reliable — Our Commitment to Safety</h2>
+          <p>
+            At Buhold Intermodal B.V., we leave nothing to chance when it comes to the safe and
+            secure handling of your valuable cargo. Our priority is to ensure that every shipment
+            arrives at its destination in the same condition as when it was entrusted to us.
+          </p>
+          <p>
+            Our highly trained team has extensive expertise in the safe handling, storage, and
+            transportation of chemical products. All on-site operations are supported by
+            experienced safety advisers and field supervisors who possess in-depth knowledge of
+            the specific chemicals we handle.
+          </p>
+          <p>
+            Furthermore, our operations are conducted in strict accordance with applicable
+            policies, legal requirements, industry standards, and local regulations. This ensures
+            that every aspect of our services meets the highest relevant safety, quality, and
+            compliance standards.
+          </p>
+          <p style="font-weight:800;color:#111111;">
+            With Buhold Intermodal B.V., your cargo is handled with professionalism, care, and a
+            strong commitment to safety at every stage.
+          </p>
+
+          <h2>Industry Membership</h2>
+          <p>
+            Buhold Intermodal B.V. is a verified member of the <strong>International Tank
+            Container Organisation (ITCO)</strong>. This membership supports our commitment to
+            recognized industry standards, regulatory compliance, operational safety, and
+            responsible tank-container transportation across the global supply chain.
+          </p>
+
+          <div class="info-box">
+            <p><strong>Registered company details:</strong> Buhold Intermodal B.V. is a private
+            limited company registered with the Dutch Chamber of Commerce under number 27223463,
+            with its registered head office at Louis Braillelaan 80, Ground Floor, 2719 EK
+            Zoetermeer, Netherlands. Operational facilities are located at Moezelweg 161,
+            3198 LS Europoort Rotterdam, Netherlands.</p>
+          </div>
+
+          <h2>Our Mission</h2>
+          <p>
+            To provide the international chemical and bulk liquid industry with storage,
+            equipment, and logistics solutions that are safe, compliant, and operationally
+            efficient — delivered by people who understand the products they handle and the
+            regulations that govern them.
+          </p>
+        </div>
+
+        <aside class="sidebar">
+          <div class="widget">
+            <h4>Company Facts</h4>
+            <div class="fact"><span>Incorporated</span><span>1984</span></div>
+            <div class="fact"><span>Legal form</span><span>Private Limited Company</span></div>
+            <div class="fact"><span>KvK number</span><span>27223463</span></div>
+            <div class="fact"><span>Branch number</span><span>000015943739</span></div>
+            <div class="fact"><span>Trade name</span><span>Buhold Intermodal BV</span></div>
+            <div class="fact"><span>ITCO</span><span>Verified Member</span></div>
+          </div>
+
+          <div class="widget">
+            <h4>Registered Office</h4>
+            <p style="font-size:.87rem;color:#374151;line-height:1.75;font-weight:600;">
+              Buhold Intermodal B.V.<br>
+              Louis Braillelaan 80, Ground Floor<br>
+              2719 EK Zoetermeer<br>
+              Netherlands
+            </p>
+            <p style="font-size:.87rem;color:#374151;line-height:1.75;font-weight:600;margin-top:16px;">
+              <strong style="color:#111111;">Europoort Location</strong><br>
+              Moezelweg 161<br>
+              3198 LS Europoort Rotterdam<br>
+              Netherlands
+            </p>
+            <p style="font-size:.87rem;color:#374151;line-height:1.75;margin-top:12px;font-weight:600;">
+              T: <a href="tel:+31684268854" style="color:#F58220;">+31 6 84268854</a><br>
+              F: +31 (0)79 7999555<br>
+              E: <a href="mailto:info@buhold-intermodal.com" style="color:#F58220;">info@buhold-intermodal.com</a><br>
+              E: <a href="mailto:Lease@buhold-intermodal.com" style="color:#F58220;">Lease@buhold-intermodal.com</a>
+            </p>
+          </div>
+
+          <div class="widget">
+            <h4>Explore</h4>
+            <ul>
+              <li><a data-go="services">Our Services</a></li>
+              <li><a data-go="fleet">Our Fleet</a></li>
+              <li><a data-go="sustainability">Sustainability</a></li>
+              <li><a data-go="news">News &amp; Insights</a></li>
+            </ul>
+          </div>
+
+          <div class="widget dark">
+            <h4>Get in Touch</h4>
+            <p>Discuss your tank storage, tank container, or bulk liquid logistics requirements
+               with our team.</p>
+            <a class="btn btn-light" data-go="contact">Contact Us</a>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     PAGE: SERVICES OVERVIEW
+============================================================ -->
+<section class="page" data-page="services">
+  <div class="page-hero">
+    <div class="container">
+      <div class="inner">
+        <div class="breadcrumb"><a data-go="home">Home</a><span class="sep">/</span>Our Services</div>
+        <h1>Our Services</h1>
+        <p>Safe and efficient storage, handling, and transportation of liquid chemical products —
+           supported by intermodal tank container equipment and an international logistics network.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-wrap bg-white">
+    <div class="container">
+      <div class="prose" style="max-width:820px;margin-bottom:44px;">
+        <p class="lead">
+          Buhold Intermodal B.V. provides reliable solutions for the handling and distribution of
+          more than 3,000 different chemical products annually.
+        </p>
+        <p>
+          Our expertise covers a broad range of products, from high-quality specialty chemicals to
+          standard bulk liquids. With a strong commitment to safety, quality, and operational
+          efficiency, we ensure that chemical products are handled, stored, and transported in
+          accordance with applicable industry standards and requirements — from origin to their
+          intended destination.
+        </p>
+      </div>
+
+      <div class="grid-3">
+        <a class="card" data-go="services/tank-storage">
+          <div class="card-media">
+            <img src="images/image17.jpg" alt="Tank Storage">
+          </div>
+          <div class="card-body">
+            <h3>Tank Storage</h3>
+            <p>Bulk liquid storage within an international network of tank storage and logistics
+               facilities, operated to applicable industry standards.</p>
+            <span class="more">View service →</span>
+          </div>
+        </a>
+
+        <a class="card" data-go="services/tank-container-logistics">
+          <div class="card-media">
+            <img src="images/image18.jpg" alt="Tank Container Logistics">
+          </div>
+          <div class="card-body">
+            <h3>Tank Container Logistics</h3>
+            <p>Door-to-door intermodal movement of ISO tank containers by road, rail, barge and
+               sea, including depot and documentation services.</p>
+            <span class="more">View service →</span>
+          </div>
+        </a>
+
+        <a class="card" data-go="services/bulk-liquid-transport">
+          <div class="card-media">
+            <img src="images/image19.jpg" alt="Bulk Liquid Transport">
+          </div>
+          <div class="card-body">
+            <h3>Bulk Liquid Transport</h3>
+            <p>Global transportation of specialty chemicals and standard bulk liquids in
+               compliance with dangerous goods regulations.</p>
+            <span class="more">View service →</span>
+          </div>
+        </a>
+
+        <a class="card" data-go="services/cargo-handling">
+          <div class="card-media">
+            <img src="images/image20.jpg" alt="Cargo Handling">
+          </div>
+          <div class="card-body">
+            <h3>Cargo Handling</h3>
+            <p>Loading, unloading, sampling, and transfer operations carried out by trained teams
+               and experienced safety advisers.</p>
+            <span class="more">View service →</span>
+          </div>
+        </a>
+
+        <a class="card" data-go="services/leasing-trading">
+          <div class="card-media">
+            <img src="images/image21.jpg" alt="Leasing &amp; Trading">
+          </div>
+          <div class="card-body">
+            <h3>Leasing &amp; Trading</h3>
+            <p>Short and long-term leasing, sale and purchase, and fleet management of intermodal
+               tank containers and related equipment.</p>
+            <span class="more">View service →</span>
+          </div>
+        </a>
+
+        <a class="card" data-go="fleet/global-network">
+          <div class="card-media">
+            <img src="images/image22.jpg" alt="Global Network">
+          </div>
+          <div class="card-body">
+            <h3>Global Network</h3>
+            <p>Strategic presence in the Port of Rotterdam and an extensive international network
+               of logistics facilities and partners.</p>
+            <span class="more">View page →</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <section class="block bg-tint">
+    <div class="container">
+      <div class="cta-band">
+        <div>
+          <h2>Not sure which service fits your cargo?</h2>
+          <p>Tell us about your product, volumes, and destinations — we will advise on the most
+             suitable storage, equipment, and transport solution.</p>
+        </div>
+        <a class="btn btn-light" data-go="contact">Request a Consultation →</a>
+      </div>
+    </div>
+  </section>
+</section>
+
+<!-- ============================================================
+     PAGE: TANK STORAGE — now with major oil ports of the world
+============================================================ -->
+<section class="page" data-page="services/tank-storage">
+  <div class="page-hero">
+    <div class="container">
+      <div class="inner">
+        <div class="breadcrumb">
+          <a data-go="home">Home</a><span class="sep">/</span>
+          <a data-go="services">Our Services</a><span class="sep">/</span>Tank Storage
+        </div>
+        <h1>Tank Storage &amp; Major Oil Ports</h1>
+        <p>Safe and efficient storage of liquid chemical products within an international network
+           of logistics facilities — anchored by the world's major oil and liquid bulk ports.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-wrap bg-white">
+    <div class="container">
+      <div class="prose" style="max-width:900px;margin-bottom:50px;">
+        <p class="lead">
+          At Buhold Intermodal B.V., we leave nothing to chance when it comes to the safe and
+          secure handling of your valuable cargo.
+        </p>
+        <p>
+          Tank storage forms one of the core pillars of our business. We provide storage
+          capacity for liquid chemical products within an international network of logistics
+          facilities, supporting the handling and distribution of more than 3,000 different
+          chemical products annually. Our expertise covers a broad range of products, from
+          high-quality specialty chemicals to standard bulk liquids.
+        </p>
+        <p>
+          Every storage operation is conducted in strict accordance with applicable policies,
+          legal requirements, industry standards, and local regulations. This ensures that
+          every aspect of our services meets the highest standards of safety, quality, and
+          operational efficiency.
+        </p>
+      </div>
+
+      <div class="section-label" style="text-align:center;">World Ports</div>
+      <h2 class="section-title" style="text-align:center;">Major Oil &amp; Liquid Bulk Ports of the World</h2>
+      <p class="section-subtitle" style="text-align:center;margin:0 auto 50px;">
+        Buhold Intermodal B.V. operates within a global network anchored by the world's largest
+        oil, chemical, and liquid bulk ports. Below is an overview of the major hubs that shape
+        international tank storage and bulk liquid logistics.
+      </p>
+
+      <div class="port-grid">
+
+        <!-- Rotterdam -->
+        <article class="port-card">
+          <div class="port-img">
+            <img src="images/image32.jpg" alt="Port of Rotterdam, Netherlands">
+            <span class="port-flag">Netherlands</span>
+            <span class="port-rank">#1 Europe</span>
+          </div>
+          <div class="port-body">
+            <h3>Port of Rotterdam</h3>
+            <div class="port-region">Europe · North Sea</div>
+            <p>
+              Rotterdam is Europe's largest port and one of the world's leading hubs for crude
+              oil, refined products, chemicals, and liquid bulk. Its deep-water access, extensive
+              tank farm capacity, and integrated pipeline network connect the port to the
+              European hinterland via barge, rail, road, and pipeline. It is home to some of the
+              largest independent tank storage terminals in the world and serves as Buhold
+              Intermodal's strategic base.
+            </p>
+            <div class="port-tags">
+              <span class="port-tag">Crude Oil</span>
+              <span class="port-tag">Chemicals</span>
+              <span class="port-tag">Liquid Bulk</span>
+              <span class="port-tag">ITCO Hub</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Jurong -->
+        <article class="port-card">
+          <div class="port-img">
+            <img src="images/image33.jpg" alt="Jurong Port, Singapore">
+            <span class="port-flag">Singapore</span>
+            <span class="port-rank">#1 Asia</span>
+          </div>
+          <div class="port-body">
+            <h3>Jurong Port</h3>
+            <div class="port-region">Asia · Singapore Strait</div>
+            <p>
+              Jurong is one of Singapore's principal industrial ports, located on the western
+              side of the island. It is a major hub for chemical, petroleum, and liquid bulk
+              storage, with large tank farms, dedicated chemical berths, and integrated logistics
+              facilities. Singapore's strategic position on the Strait of Malacca makes it the
+              world's largest bunkering port and a critical node for Asia-Pacific trade.
+            </p>
+            <div class="port-tags">
+              <span class="port-tag">Bunkering</span>
+              <span class="port-tag">Chemicals</span>
+              <span class="port-tag">Refined Products</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Houston -->
+        <article class="port-card">
+          <div class="port-img">
+            <img src="images/image34.jpg" alt="Port of Houston, USA">
+            <span class="port-flag">United States</span>
+            <span class="port-rank">#1 US</span>
+          </div>
+          <div class="port-body">
+            <h3>Port of Houston</h3>
+            <div class="port-region">North America · Gulf of Mexico</div>
+            <p>
+              Houston is the largest port in the United States by foreign waterborne tonnage
+              and a global centre for the petrochemical industry. The Houston Ship Channel
+              supports dozens of refineries, chemical plants, and tank storage terminals, and
+              is the leading export point for US crude oil, refined products, and petrochemicals.
+              Its concentration of liquid bulk infrastructure makes it one of the most important
+              tank storage hubs on the planet.
+            </p>
+            <div class="port-tags">
+              <span class="port-tag">Petrochemicals</span>
+              <span class="port-tag">Crude Oil</span>
+              <span class="port-tag">Refined Fuels</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Qingdao -->
+        <article class="port-card">
+          <div class="port-img">
+            <img src="images/image35.jpg" alt="Port of Qingdao, China">
+            <span class="port-flag">China</span>
+            <span class="port-rank">Top 5 World</span>
+          </div>
+          <div class="port-body">
+            <h3>Port of Qingdao</h3>
+            <div class="port-region">Asia · Yellow Sea</div>
+            <p>
+              Qingdao is one of China's largest and most modern ports, handling crude oil,
+              refined products, and liquid chemicals at scale. Its dedicated oil terminal at
+              Huangdao accommodates very large crude carriers (VLCCs) and connects through
+              pipelines to major refineries across Shandong province. Qingdao is a leading
+              import hub for crude oil in China and a key node for bulk liquid logistics in
+              Northeast Asia.
+            </p>
+            <div class="port-tags">
+              <span class="port-tag">Crude Oil</span>
+              <span class="port-tag">VLCC Terminal</span>
+              <span class="port-tag">Chemicals</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Fujairah -->
+        <article class="port-card">
+          <div class="port-img">
+            <img src="images/image36.jpg" alt="Port of Fujairah, UAE">
+            <span class="port-flag">United Arab Emirates</span>
+            <span class="port-rank">#2 Bunkering</span>
+          </div>
+          <div class="port-body">
+            <h3>Port of Fujairah</h3>
+            <div class="port-region">Middle East · Gulf of Oman</div>
+            <p>
+              Fujairah is the world's second-largest bunkering port and a critical storage hub
+              for crude oil, refined products, and liquid chemicals. Located outside the Strait
+              of Hormuz on the Gulf of Oman, it offers strategic access to Middle East, Asian,
+              and East African markets. Its vast tank farm capacity, dedicated oil terminals,
+              and offshore anchorage make it one of the most important liquid bulk ports in the
+              world.
+            </p>
+            <div class="port-tags">
+              <span class="port-tag">Bunkering</span>
+              <span class="port-tag">Crude Oil</span>
+              <span class="port-tag">Refined Products</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Antwerp -->
+        <article class="port-card">
+          <div class="port-img">
+            <img src="images/image37.jpg" alt="Port of Antwerp, Belgium">
+            <span class="port-flag">Belgium</span>
+            <span class="port-rank">#2 Europe</span>
+          </div>
+          <div class="port-body">
+            <h3>Port of Antwerp</h3>
+            <div class="port-region">Europe · Scheldt River</div>
+            <p>
+              Antwerp is Europe's second-largest port and the continent's most important
+              integrated chemical cluster. Its tank storage terminals handle a broad range of
+              liquid bulk products including petrochemicals, base oils, biofuels, and specialty
+              chemicals. Antwerp's location at the heart of the Antwerp-Rotterdam-Amsterdam
+              (ARA) region gives it strong connectivity to the European hinterland by barge,
+              rail, road, and pipeline.
+            </p>
+            <div class="port-tags">
+              <span class="port-tag">Chemicals</span>
+              <span class="port-tag">Petrochemicals</span>
+              <span class="port-tag">Biofuels</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Busan -->
+        <article class="port-card">
+          <div class="port-img">
+            <img src="images/image38.jpg" alt="Port of Busan, South Korea">
+            <span class="port-flag">South Korea</span>
+            <span class="port-rank">Top 10 World</span>
+          </div>
+          <div class="port-body">
+            <h3>Port of Busan</h3>
+            <div class="port-region">Asia · Korea Strait</div>
+            <p>
+              Busan is South Korea's largest port and one of the busiest in the world by cargo
+              tonnage. Its petrochemical and oil terminals handle crude oil, refined products,
+              and liquid chemicals for the Korean peninsula and transshipment across Northeast
+              Asia. Dedicated tank storage facilities and chemical berths make it a key node
+              for bulk liquid logistics in the region.
+            </p>
+            <div class="port-tags">
+              <span class="port-tag">Crude Oil</span>
+              <span class="port-tag">Chemicals</span>
+              <span class="port-tag">Transshipment</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Ningbo-Zhoushan -->
+        <article class="port-card">
+          <div class="port-img">
+            <img src="images/image39.jpg" alt="Port of Ningbo-Zhoushan, China">
+            <span class="port-flag">China</span>
+            <span class="port-rank">#1 World Cargo</span>
+          </div>
+          <div class="port-body">
+            <h3>Port of Ningbo-Zhoushan</h3>
+            <div class="port-region">Asia · East China Sea</div>
+            <p>
+              Ningbo-Zhoushan is the world's largest port by cargo tonnage and a leading hub
+              for crude oil, refined products, and liquid chemicals. Its deep-water berths
+              accommodate the largest tankers, and its integrated pipeline and tank farm
+              infrastructure supports a vast petrochemical complex. It is the primary import
+              gateway for crude oil into eastern China.
+            </p>
+            <div class="port-tags">
+              <span class="port-tag">Crude Oil</span>
+              <span class="port-tag">Bulk Liquid</span>
+              <span class="port-tag">Petrochemicals</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Jebel Ali -->
+        <article class="port-card">
+          <div class="port-img">
+            <img src="images/image40.jpg" alt="Jebel Ali Port, Dubai, UAE">
+            <span class="port-flag">United Arab Emirates</span>
+            <span class="port-rank">#1 Middle East</span>
+          </div>
+          <div class="port-body">
+            <h3>Jebel Ali Port</h3>
+            <div class="port-region">Middle East · Arabian Gulf</div>
+            <p>
+              Jebel Ali is the largest port in the Middle East and one of the busiest container
+              and liquid bulk ports in the world. Located in Dubai, it combines a major
+              container terminal with extensive oil, chemical, and liquid bulk storage
+              facilities. Its free zone and multimodal links make it a strategic hub for trade
+              between Asia, Europe, and the Middle East.
+            </p>
+            <div class="port-tags">
+              <span class="port-tag">Liquid Bulk</span>
+              <span class="port-tag">Chemicals</span>
+              <span class="port-tag">Free Zone</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Ras Tanura -->
+        <article class="port-card">
+          <div class="port-img">
+            <img src="images/image41.jpg" alt="Ras Tanura, Saudi Arabia">
+            <span class="port-flag">Saudi Arabia</span>
+            <span class="port-rank">#1 Crude Export</span>
+          </div>
+          <div class="port-body">
+            <h3>Ras Tanura</h3>
+            <div class="port-region">Middle East · Arabian Gulf</div>
+            <p>
+              Ras Tanura is one of the largest crude oil export terminals in the world, operated
+              by Saudi Aramco. It handles millions of barrels of crude oil and refined products
+              every day, supported by extensive offshore loading facilities, tank farms, and
+              pipelines. It is a foundational node in global crude oil logistics and a
+              benchmark for large-scale liquid bulk handling.
+            </p>
+            <div class="port-tags">
+              <span class="port-tag">Crude Oil</span>
+              <span class="port-tag">Refined Products</span>
+              <span class="port-tag">VLCC Loading</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Yanbu -->
+        <article class="port-card">
+          <div class="port-img">
+            <img src="images/image42.jpg" alt="Yanbu Commercial Port, Saudi Arabia">
+            <span class="port-flag">Saudi Arabia</span>
+            <span class="port-rank">Red Sea Hub</span>
+          </div>
+          <div class="port-body">
+            <h3>Yanbu Commercial Port</h3>
+            <div class="port-region">Middle East · Red Sea</div>
+            <p>
+              Yanbu is a major industrial and commercial port on Saudi Arabia's Red Sea coast.
+              It handles crude oil, refined products, petrochemicals, and liquid chemicals,
+              supported by large tank farms and modern loading facilities. Its position on the
+              Red Sea gives it strategic access to European, Asian, and East African markets —
+              complementary to Ras Tanura on the Arabian Gulf.
+            </p>
+            <div class="port-tags">
+              <span class="port-tag">Crude Oil</span>
+              <span class="port-tag">Petrochemicals</span>
+              <span class="port-tag">Red Sea</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Santos -->
+        <article class="port-card">
+          <div class="port-img">
+            <img src="images/image43.jpg" alt="Port of Santos, Brazil">
+            <span class="port-flag">Brazil</span>
+            <span class="port-rank">#1 South America</span>
+          </div>
+          <div class="port-body">
+            <h3>Port of Santos</h3>
+            <div class="port-region">South America · Atlantic</div>
+            <p>
+              Santos is the largest port in Latin America and a leading hub for liquid bulk in
+              the Southern Hemisphere. It handles crude oil, refined products, ethanol, and
+              liquid chemicals, supported by extensive tank storage and petrochemical terminals.
+              Its connections to Brazil's inland production regions and Atlantic shipping lanes
+              make it a critical node for South American liquid bulk trade.
+            </p>
+            <div class="port-tags">
+              <span class="port-tag">Crude Oil</span>
+              <span class="port-tag">Ethanol</span>
+              <span class="port-tag">Chemicals</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Vancouver -->
+        <article class="port-card">
+          <div class="port-img">
+            <img src="images/image44.jpg" alt="Port of Vancouver, Canada">
+            <span class="port-flag">Canada</span>
+            <span class="port-rank">#1 Canada</span>
+          </div>
+          <div class="port-body">
+            <h3>Port of Vancouver</h3>
+            <div class="port-region">North America · Pacific</div>
+            <p>
+              Vancouver is Canada's largest port and the primary gateway for Canadian crude oil,
+              refined products, and liquid chemicals to Pacific markets. It combines deep-water
+              berths, modern tank storage terminals, and rail links to inland oil sands and
+              petrochemical production. Its position on the west coast makes it a key node for
+              trans-Pacific liquid bulk trade.
+            </p>
+            <div class="port-tags">
+              <span class="port-tag">Crude Oil</span>
+              <span class="port-tag">Refined Products</span>
+              <span class="port-tag">Pacific Gateway</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Corpus Christi -->
+        <article class="port-card">
+          <div class="port-img">
+            <img src="images/image45.jpg" alt="Port of Corpus Christi, USA">
+            <span class="port-flag">United States</span>
+            <span class="port-rank">#1 US Crude Export</span>
+          </div>
+          <div class="port-body">
+            <h3>Port of Corpus Christi</h3>
+            <div class="port-region">North America · Gulf of Mexico</div>
+            <p>
+              Corpus Christi is the leading US port for crude oil exports and a major hub for
+              refined products and liquid chemicals. Its deep-water channel accommodates
+              fully loaded VLCCs, and its extensive tank storage and pipeline infrastructure
+              connect it directly to Permian Basin production. It is one of the fastest-growing
+              liquid bulk ports in the world.
+            </p>
+            <div class="port-tags">
+              <span class="port-tag">Crude Oil</span>
+              <span class="port-tag">VLCC Export</span>
+              <span class="port-tag">Refined Products</span>
+            </div>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- Storage capabilities checklist -->
+      <div style="max-width:900px;margin:70px auto 0;">
+        <div class="section-label">Our Storage Capabilities</div>
+        <h2 class="section-title">Bulk Liquid Storage You Can Rely On</h2>
+        <p>
+          Across all these ports and our wider network, we support a broad range of liquid
+          chemical and bulk liquid storage requirements. Every storage operation is conducted in
+          strict accordance with applicable policies, legal requirements, industry standards, and
+          local regulations.
+        </p>
+        <ul class="checklist">
+          <li>Bulk liquid storage for chemical and specialty chemical products</li>
+          <li>Dedicated and shared tank capacity arrangements</li>
+          <li>Stainless steel and coated tank configurations</li>
+          <li>Temperature-sensitive product handling and control</li>
+          <li>Heating and cooling arrangements where required</li>
+          <li>Nitrogen blanketing and vapour management</li>
+          <li>Inventory monitoring and stock reporting</li>
+          <li>Sampling, analysis, and quality verification support</li>
+        </ul>
+
+        <div class="info-box">
+          <p><strong>Products handled:</strong> our expertise covers a broad range of products,
+          from high-quality specialty chemicals to standard bulk liquids. If you would like to
+          confirm whether a specific product can be accommodated, please contact our
+          operations team.</p>
+        </div>
+
+        <h2 style="font-size:1.4rem;font-weight:800;color:#111111;margin:34px 0 14px;letter-spacing:-0.3px;">
+          Safety and Compliance
+        </h2>
+        <p>
+          Our highly trained team has extensive expertise in the safe handling and storage of
+          chemical products. All on-site operations are supported by experienced safety advisers
+          and field supervisors who possess in-depth knowledge of the specific chemicals we
+          handle.
+        </p>
+        <p>
+          Storage activities are carried out in accordance with applicable industry standards
+          and requirements, supported by documented procedures, permit compliance, and regular
+          inspection regimes. Where products are classified as dangerous goods, storage is
+          managed in line with the relevant regulatory framework.
+        </p>
+
+        <h2 style="font-size:1.4rem;font-weight:800;color:#111111;margin:34px 0 14px;letter-spacing:-0.3px;">
+          Seamless Connection to Logistics
+        </h2>
+        <p>
+          Storage is never an isolated activity in our operation. Because our core activities
+          also encompass cargo handling and the leasing and trading of intermodal tank
+          containers, stored product can be transferred directly into tank containers and moved
+          onward by road, rail, barge, or sea — creating an efficient, single-supplier chain
+          from storage tank to final destination.
+        </p>
+
+        <h2 style="font-size:1.4rem;font-weight:800;color:#111111;margin:34px 0 14px;letter-spacing:-0.3px;">
+          Facility Standards
+        </h2>
+        <p>
+          Our storage network is built around facilities that meet recognized industry
+          requirements for bulk liquid handling. Sites are operated with attention to
+          containment, fire safety, emergency response, environmental protection, and access
+          control — reflecting our position as a verified member of the International Tank
+          Container Organisation (ITCO) and our commitment to responsible operations.
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <section class="block bg-tint">
+    <div class="container">
+      <div class="cta-band">
+        <div>
+          <h2>Need storage at one of the world's major ports?</h2>
+          <p>Tell us your product, volume, and required port — our team will assess availability,
+             compliance, and routing options across our international network.</p>
+        </div>
+        <a class="btn btn-light" data-go="contact">Contact Us →</a>
+      </div>
+    </div>
+  </section>
+</section>
+
+<!-- ============================================================
+     PAGE: TANK CONTAINER LOGISTICS
+============================================================ -->
+<section class="page" data-page="services/tank-container-logistics">
+  <div class="page-hero">
+    <div class="container">
+      <div class="inner">
+        <div class="breadcrumb">
+          <a data-go="home">Home</a><span class="sep">/</span>
+          <a data-go="services">Our Services</a><span class="sep">/</span>Tank Container Logistics
+        </div>
+        <h1>Tank Container Logistics</h1>
+        <p>End-to-end intermodal logistics for bulk liquids — combining tank container equipment,
+           multimodal transport, and depot services into a single dependable chain.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-wrap bg-white">
+    <div class="container">
+      <div class="content-grid">
+        <div class="prose">
+          <p class="lead">
+            Our core activities encompass the distribution, development, storage, cargo handling,
+            leasing, and trading of intermodal tank containers designed for the safe and efficient
+            transportation of bulk liquid products worldwide.
+          </p>
+
+          <h2>Intermodal by Design</h2>
+          <p>
+            Tank container logistics is the discipline of moving bulk liquids efficiently across
+            modes of transport without unnecessary handling of the product itself. A single ISO
+            tank container can be lifted from a truck chassis onto a rail wagon, transferred to a
+            barge or vessel, and delivered onward by road — with the product remaining sealed and
+            protected throughout.
+          </p>
+          <p>
+            Buhold Intermodal B.V. brings this intermodal capability together with tank container
+            equipment, depot services, and documentation support, providing a single point of
+            coordination for the movement of bulk liquid cargo.
+          </p>
+
+          <figure class="content-image">
+            <div class="img-wrap">
+              <img src="images/image10.jpg" alt="Tank container transfer between barge, rail, and road">
+            </div>
+            <figcaption>Tank container transfer between barge, rail, and road</figcaption>
+          </figure>
+
+          <h2>What Our Tank Container Logistics Covers</h2>
+          <ul class="checklist">
+            <li>Door-to-door and port-to-door tank container movements</li>
+            <li>Multimodal transport by road, rail, barge, and sea</li>
+            <li>Container positioning, release, and equipment control</li>
+            <li>Depot services including cleaning, inspection, and repair coordination</li>
+            <li>Heating and temperature management for sensitive products</li>
+            <li>Documentation support, including dangerous goods paperwork</li>
+            <li>Transhipment and storage coordination between transport legs</li>
+            <li>Shipment visibility and status reporting</li>
+          </ul>
+
+          <h2>Equipment Built for the Product</h2>
+          <p>
+            The correct tank container specification is essential for safe and compliant
+            transportation. Depending on the product, our equipment range includes standard
+            uninsulated units, insulated tanks, heated tanks, baffled tanks for road stability,
+            and configurations suited to food-grade or high-purity products.
+          </p>
+          <p>
+            You can read more about specifications and configurations on our
+            <a data-go="fleet/iso-tank-containers">ISO Tank Containers</a> page.
+          </p>
+
+          <h2>Safety, Compliance, and Documentation</h2>
+          <p>
+            Because we handle chemical products, compliance is central to everything we do. Our
+            operations are conducted in strict accordance with applicable policies, legal
+            requirements, industry standards, and local regulations. Shipments are supported by
+            appropriate documentation, and where products are classified as dangerous goods,
+            handling and transport follow the relevant modal regulations.
+          </p>
+
+          <div class="info-box">
+            <p><strong>Verified ITCO member.</strong> Our membership of the International Tank
+            Container Organisation supports our commitment to recognized industry standards,
+            regulatory compliance, operational safety, and responsible tank-container
+            transportation.</p>
+          </div>
+
+          <h2>From Port of Rotterdam to the World</h2>
+          <p>
+            Our strategic presence and registration within the Port of Rotterdam transport hub
+            places us at one of Europe's major centres for international logistics and liquid bulk
+            transportation. From this base, tank containers can be routed through Europe's inland
+            waterway, rail, and road networks, or loaded for deep-sea destinations worldwide.
+          </p>
+        </div>
+
+        <aside class="sidebar">
+          <div class="widget">
+            <h4>Our Services</h4>
+            <ul>
+              <li><a data-go="services">Services Overview</a></li>
+              <li><a data-go="services/tank-storage">Tank Storage</a></li>
+              <li><a data-go="services/tank-container-logistics" class="active">Tank Container Logistics</a></li>
+              <li><a data-go="services/bulk-liquid-transport">Bulk Liquid Transport</a></li>
+              <li><a data-go="services/cargo-handling">Cargo Handling</a></li>
+              <li><a data-go="services/leasing-trading">Leasing &amp; Trading</a></li>
+            </ul>
+          </div>
+          <div class="widget">
+            <h4>Transport Modes</h4>
+            <div class="fact"><span>Road</span><span>✓</span></div>
+            <div class="fact"><span>Rail</span><span>✓</span></div>
+            <div class="fact"><span>Barge / Inland waterway</span><span>✓</span></div>
+            <div class="fact"><span>Deep-sea</span><span>✓</span></div>
+          </div>
+          <div class="widget dark">
+            <h4>Plan a Movement</h4>
+            <p>Share your origin, destination, product, and volume — we will propose an
+               intermodal routing and equipment solution.</p>
+            <a class="btn btn-light" data-go="contact">Get a Quote</a>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     PAGE: BULK LIQUID TRANSPORT
+============================================================ -->
+<section class="page" data-page="services/bulk-liquid-transport">
+  <div class="page-hero">
+    <div class="container">
+      <div class="inner">
+        <div class="breadcrumb">
+          <a data-go="home">Home</a><span class="sep">/</span>
+          <a data-go="services">Our Services</a><span class="sep">/</span>Bulk Liquid Transport
+        </div>
+        <h1>Bulk Liquid Transport</h1>
+        <p>Global transportation of specialty chemicals and standard bulk liquids — handled by
+           people with in-depth knowledge of the products and regulations involved.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-wrap bg-white">
+    <div class="container">
+      <div class="content-grid">
+        <div class="prose">
+          <p class="lead">
+            Through our extensive international network of logistics facilities and highly trained
+            professionals, we provide reliable solutions for the handling and distribution of more
+            than 3,000 different chemical products annually.
+          </p>
+
+          <h2>A Broad Product Range</h2>
+          <p>
+            Our expertise covers a broad range of products, from high-quality specialty chemicals
+            to standard bulk liquids. That range demands flexibility — in equipment, in handling
+            procedures, and in the transport modes we combine — and it demands people who
+            understand the specific characteristics of each product they move.
+          </p>
+          <p>
+            With a strong commitment to safety, quality, and operational efficiency, we ensure
+            that chemical products are handled, stored, and transported in accordance with
+            applicable industry standards and requirements, from origin to their intended
+            destination.
+          </p>
+
+          <figure class="content-image">
+            <div class="img-wrap">
+              <img src="images/image11.jpg" alt="Deep-sea chemical tanker — intercontinental bulk liquid transport">
+            </div>
+            <figcaption>Deep-sea chemical tanker — intercontinental bulk liquid transport</figcaption>
+          </figure>
+
+          <h2>Transport Modes</h2>
+          <p>Bulk liquids are moved most efficiently when modes are combined. We coordinate
+             transport by:</p>
+          <ul>
+            <li><strong>Road</strong> — collection and delivery by tank container on chassis,
+                including final-mile distribution.</li>
+            <li><strong>Rail</strong> — long-distance inland movements with lower emissions per
+                tonne-kilometre.</li>
+            <li><strong>Barge and inland waterway</strong> — high-volume movements through the
+                European waterway network, with the Port of Rotterdam as a natural hub.</li>
+            <li><strong>Deep-sea</strong> — intercontinental shipment of ISO tank containers to
+                and from global markets.</li>
+          </ul>
+
+          <h2>Dangerous Goods and Regulatory Compliance</h2>
+          <p>
+            Chemical products are frequently classified as dangerous goods, and moving them
+            correctly requires rigorous attention to classification, packaging, labelling,
+            documentation, and modal regulations. Our operations are conducted in strict
+            accordance with applicable policies, legal requirements, industry standards, and local
+            regulations.
+          </p>
+          <p>
+            This ensures that every aspect of our services meets the highest standards — and that
+            your shipment is not delayed by avoidable compliance issues.
+          </p>
+
+          <h2>Temperature and Product Integrity</h2>
+          <p>
+            Many bulk liquids require controlled conditions during transport. Depending on the
+            product, we coordinate heated, insulated, or otherwise specified tank container
+            equipment, so that the product arrives at its destination in the same condition as
+            when it was entrusted to us.
+          </p>
+
+          <div class="info-box">
+            <p><strong>Our promise:</strong> we leave nothing to chance when it comes to the safe
+            and secure handling of your valuable cargo. Our priority is to ensure that every
+            shipment arrives at its destination in the same condition as when it was entrusted
+            to us.</p>
+          </div>
+
+          <h2>Supported by an International Network</h2>
+          <p>
+            Through our international network, industry expertise, and logistics capabilities, we
+            provide reliable solutions for the storage, handling, transportation, and global
+            movement of bulk liquid cargo. Our strategic presence in the Port of Rotterdam
+            connects European production and consumption centres with international markets.
+          </p>
+        </div>
+
+        <aside class="sidebar">
+          <div class="widget">
+            <h4>Our Services</h4>
+            <ul>
+              <li><a data-go="services">Services Overview</a></li>
+              <li><a data-go="services/tank-storage">Tank Storage</a></li>
+              <li><a data-go="services/tank-container-logistics">Tank Container Logistics</a></li>
+              <li><a data-go="services/bulk-liquid-transport" class="active">Bulk Liquid Transport</a></li>
+              <li><a data-go="services/cargo-handling">Cargo Handling</a></li>
+              <li><a data-go="services/leasing-trading">Leasing &amp; Trading</a></li>
+            </ul>
+          </div>
+          <div class="widget">
+            <h4>Coverage</h4>
+            <div class="fact"><span>Products</span><span>3,000+</span></div>
+            <div class="fact"><span>Range</span><span>Specialty &amp; bulk</span></div>
+            <div class="fact"><span>Modes</span><span>Road / Rail / Barge / Sea</span></div>
+            <div class="fact"><span>Hub</span><span>Port of Rotterdam</span></div>
+          </div>
+          <div class="widget dark">
+            <h4>Move Your Product</h4>
+            <p>Send us your product details and routing requirements for a tailored transport
+               proposal.</p>
+            <a class="btn btn-light" data-go="contact">Contact Operations</a>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     PAGE: CARGO HANDLING
+============================================================ -->
+<section class="page" data-page="services/cargo-handling">
+  <div class="page-hero">
+    <div class="container">
+      <div class="inner">
+        <div class="breadcrumb">
+          <a data-go="home">Home</a><span class="sep">/</span>
+          <a data-go="services">Our Services</a><span class="sep">/</span>Cargo Handling
+        </div>
+        <h1>Cargo Handling</h1>
+        <p>Loading, unloading, transfer, and sampling operations carried out by trained teams and
+           supported by experienced safety advisers and field supervisors.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-wrap bg-white">
+    <div class="container">
+      <div class="content-grid">
+        <div class="prose">
+          <p class="lead">
+            Our highly trained team has extensive expertise in the safe handling, storage, and
+            transportation of chemical products.
+          </p>
+
+          <h2>Handling Is Where Safety Is Proven</h2>
+          <p>
+            Storage tanks and tank containers are only part of the picture. The moments of highest
+            risk in bulk liquid logistics are the transfers — filling and discharging tanks,
+            connecting and disconnecting lines, sampling, and moving equipment. This is where
+            training, supervision, and procedure matter most.
+          </p>
+          <p>
+            All on-site operations at Buhold Intermodal B.V. are supported by experienced safety
+            advisers and field supervisors who possess in-depth knowledge of the specific
+            chemicals we handle. Their presence ensures that handling work is carried out
+            correctly, consistently, and in compliance with the applicable requirements.
+          </p>
+
+          <figure class="content-image">
+            <div class="img-wrap">
+              <img src="images/image12.jpg" alt="Terminal cargo handling — trained teams and safety supervision on site">
+            </div>
+            <figcaption>Terminal cargo handling — trained teams and safety supervision on site</figcaption>
+          </figure>
+
+          <h2>Handling Activities</h2>
+          <ul class="checklist">
+            <li>Loading and discharging of tanks and tank containers</li>
+            <li>Transfer operations between storage and transport equipment</li>
+            <li>Sampling and quality verification support</li>
+            <li>Line connection, purging, and safe disconnection procedures</li>
+            <li>Drumming and small-package handling where required</li>
+            <li>Lifting and positioning of intermodal tank containers</li>
+            <li>Inspection and condition checks before and after handling</li>
+            <li>Coordination with depot, terminal, and transport partners</li>
+          </ul>
+
+          <h2>Supervision and Expertise</h2>
+          <p>
+            The knowledge held by our safety advisers and field supervisors is product-specific.
+            They understand the characteristics, hazards, and handling requirements of the
+            chemicals being moved — which allows risks to be identified before work begins rather
+            than reacted to afterwards.
+          </p>
+          <p>
+            This supervision model is one reason our clients entrust us with products that require
+            careful, informed handling rather than simple throughput.
+          </p>
+
+          <h2>Compliance in Practice</h2>
+          <p>
+            Our operations are conducted in strict accordance with applicable policies, legal
+            requirements, industry standards, and local regulations. In practical terms, that
+            means documented procedures, trained personnel, appropriate personal protective
+            equipment, containment and spill-response arrangements, and clear escalation
+            protocols.
+          </p>
+
+          <div class="info-box">
+            <p><strong>Product knowledge matters.</strong> Because our team handles a broad range
+            of products — from high-quality specialty chemicals to standard bulk liquids — we
+            approach each handling operation on the basis of what is actually being moved.</p>
+          </div>
+
+          <h2>Handling Linked to Logistics</h2>
+          <p>
+            Cargo handling at Buhold Intermodal B.V. is not a standalone service. It connects
+            directly to our <a data-go="services/tank-storage">tank storage</a> and
+            <a data-go="services/tank-container-logistics">tank container logistics</a>
+            activities, allowing product to move from vessel or tank, through handling and
+            storage, into transport equipment, and onward to its destination — under one
+            coordinated operation.
+          </p>
+        </div>
+
+        <aside class="sidebar">
+          <div class="widget">
+            <h4>Our Services</h4>
+            <ul>
+              <li><a data-go="services">Services Overview</a></li>
+              <li><a data-go="services/tank-storage">Tank Storage</a></li>
+              <li><a data-go="services/tank-container-logistics">Tank Container Logistics</a></li>
+              <li><a data-go="services/bulk-liquid-transport">Bulk Liquid Transport</a></li>
+              <li><a data-go="services/cargo-handling" class="active">Cargo Handling</a></li>
+              <li><a data-go="services/leasing-trading">Leasing &amp; Trading</a></li>
+            </ul>
+          </div>
+          <div class="widget">
+            <h4>Safety Framework</h4>
+            <div class="fact"><span>Safety advisers</span><span>On-site</span></div>
+            <div class="fact"><span>Field supervisors</span><span>Product-trained</span></div>
+            <div class="fact"><span>Procedures</span><span>Documented</span></div>
+            <div class="fact"><span>Compliance</span><span>Standards &amp; regulations</span></div>
+          </div>
+          <div class="widget dark">
+            <h4>Discuss Handling Requirements</h4>
+            <p>Products requiring special handling procedures can be reviewed with our operations
+               team in advance.</p>
+            <a class="btn btn-light" data-go="contact">Contact Operations</a>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     PAGE: LEASING & TRADING
+============================================================ -->
+<section class="page" data-page="services/leasing-trading">
+  <div class="page-hero">
+    <div class="container">
+      <div class="inner">
+        <div class="breadcrumb">
+          <a data-go="home">Home</a><span class="sep">/</span>
+          <a data-go="services">Our Services</a><span class="sep">/</span>Leasing &amp; Trading
+        </div>
+        <h1>Leasing &amp; Trading</h1>
+        <p>Distribution, development, leasing, and trading of intermodal tank containers and
+           related equipment for the global bulk liquid industry.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-wrap bg-white">
+    <div class="container">
+      <div class="content-grid">
+        <div class="prose">
+          <p class="lead">
+            Our core activities encompass the distribution, development, storage, cargo handling,
+            leasing, and trading of intermodal tank containers designed for the safe and efficient
+            transportation of bulk liquid products worldwide.
+          </p>
+
+          <h2>Equipment as a Commercial Service</h2>
+          <p>
+            Buhold Intermodal B.V. is not only an operator — it is also an international logistics
+            and sales organization. Alongside our storage and transport activities, we lease,
+            trade, and develop intermodal tank container equipment, giving clients flexible access
+            to the right equipment without the commitment of outright ownership.
+          </p>
+
+          <figure class="content-image">
+            <div class="img-wrap">
+              <img src="images/image13.jpg" alt="Tank container leasing yard — flexible equipment access">
+            </div>
+            <figcaption>Tank container leasing yard — flexible equipment access</figcaption>
+          </figure>
+
+          <h2>Leasing Solutions</h2>
+          <p>
+            Tank container demand fluctuates with production cycles, seasonal volumes, and market
+            conditions. Leasing allows capacity to be matched to actual requirement.
+          </p>
+          <ul class="checklist">
+            <li>Short-term and project-based tank container leasing</li>
+            <li>Long-term fleet leasing arrangements</li>
+            <li>Flexible fleet sizing to match changing volumes</li>
+            <li>Specification matching for specific product requirements</li>
+            <li>Equipment positioning and return logistics coordination</li>
+            <li>Maintenance and repair coordination during the lease period</li>
+          </ul>
+
+          <h2>Trading and Development</h2>
+          <p>
+            Beyond leasing, we are active in the trading and development of intermodal tank
+            containers. This includes the purchase and sale of equipment, the development of
+            units suited to particular product or route requirements, and the coordination of
+            equipment specifications with manufacturers.
+          </p>
+
+          <h2>Trailer Trade and Repair</h2>
+          <p>
+            Our declared business activity includes the trade in and repair of semi-trailers and
+            trailers (excluding caravans). This supports the intermodal equipment side of our
+            operation and reflects the wider transport-equipment capability that sits behind our
+            logistics services.
+          </p>
+          <p>
+            Further details on the equipment we work with are available on our
+            <a data-go="fleet/iso-tank-containers">ISO Tank Containers</a> and
+            <a data-go="fleet/intermodal-equipment">Intermodal Equipment</a> pages.
+          </p>
+
+          <div class="info-box">
+            <p><strong>Fleet management included.</strong> Leased equipment is supported by
+            inspection regimes, maintenance coordination, and compliance documentation
+            appropriate to the products being carried.</p>
+          </div>
+
+          <h2>Why Clients Lease Through Us</h2>
+          <p>
+            Because we also operate equipment and storage ourselves, we understand how tank
+            containers behave in real service — the specifications that matter, the maintenance
+            issues that arise, and the compliance requirements that apply. That operating
+            experience informs the commercial advice we give.
+          </p>
+        </div>
+
+        <aside class="sidebar">
+          <div class="widget">
+            <h4>Our Services</h4>
+            <ul>
+              <li><a data-go="services">Services Overview</a></li>
+              <li><a data-go="services/tank-storage">Tank Storage</a></li>
+              <li><a data-go="services/tank-container-logistics">Tank Container Logistics</a></li>
+              <li><a data-go="services/bulk-liquid-transport">Bulk Liquid Transport</a></li>
+              <li><a data-go="services/cargo-handling">Cargo Handling</a></li>
+              <li><a data-go="services/leasing-trading" class="active">Leasing &amp; Trading</a></li>
+            </ul>
+          </div>
+          <div class="widget">
+            <h4>Leasing Options</h4>
+            <div class="fact"><span>Short term</span><span>Available</span></div>
+            <div class="fact"><span>Long term</span><span>Available</span></div>
+            <div class="fact"><span>Project based</span><span>Available</span></div>
+            <div class="fact"><span>Equipment types</span><span>Various</span></div>
+          </div>
+          <div class="widget dark">
+            <h4>Equipment Enquiry</h4>
+            <p>Tell us how many units you need, for how long, and for which product — we will
+               propose a leasing or purchase option.</p>
+            <a class="btn btn-light" data-go="contact">Request Availability</a>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     PAGE: FLEET OVERVIEW
+============================================================ -->
+<section class="page" data-page="fleet">
+  <div class="page-hero">
+    <div class="container">
+      <div class="inner">
+        <div class="breadcrumb"><a data-go="home">Home</a><span class="sep">/</span>Our Fleet</div>
+        <h1>Our Fleet</h1>
+        <p>Intermodal tank containers and transport equipment engineered and maintained for the
+           safe movement of bulk liquid products worldwide.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-wrap bg-white">
+    <div class="container">
+      <div class="prose" style="max-width:820px;margin-bottom:44px;">
+        <p class="lead">
+          Our core activities encompass the distribution, development, storage, cargo handling,
+          leasing, and trading of intermodal tank containers designed for the safe and efficient
+          transportation of bulk liquid products worldwide.
+        </p>
+        <p>
+          The right equipment is fundamental to safe bulk liquid logistics. A tank container must
+          suit the product it carries, the route it travels, and the regulations that apply along
+          the way. Our fleet and equipment portfolio is built around that principle.
+        </p>
+      </div>
+
+      <div class="grid-3">
+        <a class="card" data-go="fleet/iso-tank-containers">
+          <div class="card-media">
+            <img src="images/image23.jpg" alt="ISO Tank Containers">
+          </div>
+          <div class="card-body">
+            <h3>ISO Tank Containers</h3>
+            <p>Standard, insulated, heated, baffled, and specialised tank containers for chemical,
+               food-grade, and high-purity bulk liquid products.</p>
+            <span class="more">View equipment →</span>
+          </div>
+        </a>
+
+        <a class="card" data-go="fleet/intermodal-equipment">
+          <div class="card-media">
+            <img src="images/image24.jpg" alt="Intermodal Equipment">
+          </div>
+          <div class="card-body">
+            <h3>Intermodal Equipment</h3>
+            <p>Swap bodies, road tankers, chassis, gensets, and trailer equipment — including the
+               trade in and repair of semi-trailers and trailers.</p>
+            <span class="more">View equipment →</span>
+          </div>
+        </a>
+
+        <a class="card" data-go="fleet/global-network">
+          <div class="card-media">
+            <img src="images/image25.jpg" alt="Global Network">
+          </div>
+          <div class="card-body">
+            <h3>Global Network</h3>
+            <p>Strategic presence in the Port of Rotterdam and an international network of
+               logistics facilities and partner depots.</p>
+            <span class="more">View network →</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat-card"><div class="stat-number">3,000+</div><div class="stat-label">Products Carried</div></div>
+        <div class="stat-card"><div class="stat-number">4</div><div class="stat-label">Transport Modes</div></div>
+        <div class="stat-card"><div class="stat-number">ITCO</div><div class="stat-label">Verified Member</div></div>
+        <div class="stat-card"><div class="stat-number">1984</div><div class="stat-label">Operating Since</div></div>
+      </div>
+    </div>
+  </div>
+
+  <section class="block bg-tint">
+    <div class="container">
+      <div class="cta-band">
+        <div>
+          <h2>Need a specific equipment specification?</h2>
+          <p>Our team can advise on the right tank container configuration for your product,
+             route, and regulatory requirements.</p>
+        </div>
+        <a class="btn btn-light" data-go="contact">Speak to Our Team →</a>
+      </div>
+    </div>
+  </section>
+</section>
+
+<!-- ============================================================
+     PAGE: ISO TANK CONTAINERS
+============================================================ -->
+<section class="page" data-page="fleet/iso-tank-containers">
+  <div class="page-hero">
+    <div class="container">
+      <div class="inner">
+        <div class="breadcrumb">
+          <a data-go="home">Home</a><span class="sep">/</span>
+          <a data-go="fleet">Our Fleet</a><span class="sep">/</span>ISO Tank Containers
+        </div>
+        <h1>ISO Tank Containers</h1>
+        <p>Intermodal tank containers designed for the safe and efficient transportation of bulk
+           liquid products worldwide.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-wrap bg-white">
+    <div class="container">
+      <div class="content-grid">
+        <div class="prose">
+          <p class="lead">
+            A single ISO tank container can travel by road, rail, barge, and sea without the
+            product inside it being handled again — the defining advantage of intermodal bulk
+            liquid transport.
+          </p>
+
+          <figure class="content-image">
+            <div class="img-wrap">
+              <img src="images/image14.jpg" alt="ISO tank container — stainless steel vessel in a 20 ft ISO freight frame">
+            </div>
+            <figcaption>ISO tank container — stainless steel vessel in a 20 ft ISO freight frame</figcaption>
+          </figure>
+
+          <h2>What an ISO Tank Container Is</h2>
+          <p>
+            An ISO tank container is a stainless steel pressure vessel mounted within a standard
+            ISO freight frame, typically 20 feet in length. Because it conforms to standard
+            container dimensions and corner-casting arrangements, it can be lifted, stacked, and
+            secured using ordinary container-handling equipment — while carrying bulk liquid
+            rather than packaged cargo.
+          </p>
+          <p>
+            This dual nature is what makes the tank container so effective: the product stays
+            sealed inside a purpose-built vessel, while the unit itself moves through the global
+            container system.
+          </p>
+
+          <h2>Typical Configurations</h2>
+          <table class="spec-table">
+            <thead>
+              <tr><th>Configuration</th><th>Typical Use</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Standard uninsulated</td><td>General chemical and bulk liquid products at ambient temperature</td></tr>
+              <tr><td>Insulated</td><td>Products requiring thermal stability during transit</td></tr>
+              <tr><td>Heated / steam-heated</td><td>Products with elevated viscosity requiring heating for discharge</td></tr>
+              <tr><td>Baffled</td><td>Products where surging must be controlled for road stability</td></tr>
+              <tr><td>Food-grade</td><td>Edible oils, juices, and other products requiring dedicated cleanliness</td></tr>
+              <tr><td>Specialised / high-purity</td><td>Products where contamination control is critical</td></tr>
+            </tbody>
+          </table>
+
+          <h2>Construction and Materials</h2>
+          <p>
+            Tank containers used for chemical service are generally constructed from stainless
+            steel to resist corrosion and to allow effective cleaning between products. Depending
+            on the product, tanks may be fitted with heating coils, insulation cladding, baffles,
+            top and bottom discharge arrangements, and appropriate valve and fitting
+            specifications.
+          </p>
+          <p>
+            Because the same unit may carry different products over its service life, cleaning and
+            inspection between loads is a critical part of the operating cycle. Our depot and
+            cleaning coordination ensures units are prepared appropriately before each loading.
+          </p>
+
+          <h2>Compliance and Certification</h2>
+          <p>
+            Tank containers are subject to periodic inspection and certification regimes, and must
+            be maintained in accordance with the applicable international and modal requirements
+            for the products they carry. Equipment used in our operations is maintained within
+            these regimes, supported by our position as a verified member of the International
+            Tank Container Organisation (ITCO).
+          </p>
+
+          <div class="info-box">
+            <p><strong>Choosing the right unit.</strong> Product characteristics — viscosity,
+            density, corrosivity, temperature sensitivity, and hazardous classification — all
+            influence which tank container specification is appropriate. Our team can advise on
+            matching equipment to product.</p>
+          </div>
+
+          <h2>Leasing and Availability</h2>
+          <p>
+            ISO tank containers are available through our
+            <a data-go="services/leasing-trading">leasing and trading</a> activities, on short-term,
+            long-term, or project-specific arrangements. If you need units for a defined period
+            rather than a permanent fleet, this is often the most efficient route.
+          </p>
+        </div>
+
+        <aside class="sidebar">
+          <div class="widget">
+            <h4>Our Fleet</h4>
+            <ul>
+              <li><a data-go="fleet">Fleet Overview</a></li>
+              <li><a data-go="fleet/iso-tank-containers" class="active">ISO Tank Containers</a></li>
+              <li><a data-go="fleet/intermodal-equipment">Intermodal Equipment</a></li>
+              <li><a data-go="fleet/global-network">Global Network</a></li>
+            </ul>
+          </div>
+          <div class="widget">
+            <h4>Quick Facts</h4>
+            <div class="fact"><span>Frame length</span><span>Typically 20 ft</span></div>
+            <div class="fact"><span>Construction</span><span>Stainless steel</span></div>
+            <div class="fact"><span>Modes</span><span>Road / Rail / Barge / Sea</span></div>
+            <div class="fact"><span>Membership</span><span>ITCO verified</span></div>
+          </div>
+          <div class="widget dark">
+            <h4>Equipment Enquiry</h4>
+            <p>Tell us your product and route — we will identify the appropriate tank container
+               specification.</p>
+            <a class="btn btn-light" data-go="contact">Ask Our Team</a>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     PAGE: INTERMODAL EQUIPMENT
+============================================================ -->
+<section class="page" data-page="fleet/intermodal-equipment">
+  <div class="page-hero">
+    <div class="container">
+      <div class="inner">
+        <div class="breadcrumb">
+          <a data-go="home">Home</a><span class="sep">/</span>
+          <a data-go="fleet">Our Fleet</a><span class="sep">/</span>Intermodal Equipment
+        </div>
+        <h1>Intermodal Equipment</h1>
+        <p>Swap bodies, road tankers, chassis, and trailer equipment supporting the movement of
+           bulk liquids across road, rail, barge, and sea.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-wrap bg-white">
+    <div class="container">
+      <div class="content-grid">
+        <div class="prose">
+          <p class="lead">
+            Intermodal transport depends on equipment that fits together — a tank container that
+            locks onto a chassis, a swap body that transfers between modes, a trailer that meets
+            the road legs of the journey.
+          </p>
+
+          <figure class="content-image">
+            <div class="img-wrap">
+              <img src="images/image15.jpg" alt="Intermodal equipment — swap bodies, road tankers, and chassis">
+            </div>
+            <figcaption>Intermodal equipment — swap bodies, road tankers, and chassis</figcaption>
+          </figure>
+
+          <h2>Beyond the Tank Container</h2>
+          <p>
+            While the ISO tank container is central to bulk liquid logistics, it does not operate
+            alone. Moving product efficiently requires a supporting equipment set: chassis to
+            carry containers on the road, swap bodies for flexible transfer, gensets for heated
+            units, and road tanker and trailer equipment for specific applications.
+          </p>
+
+          <h2>Equipment Categories</h2>
+          <h3>Swap Bodies</h3>
+          <p>
+            Swap bodies are transport units designed to be transferred quickly between road
+            vehicles and other modes. They offer flexibility where a full ISO tank container is
+            not required, or where rapid interchange between road and rail is advantageous.
+          </p>
+
+          <h3>Road Tankers</h3>
+          <p>
+            For certain routes and volumes, road tankers remain the most practical solution.
+            These units are suited to direct road movements and to operations where transfer into
+            an intermodal unit would add handling without benefit.
+          </p>
+
+          <h3>Trailers and Semi-Trailers</h3>
+          <p>
+            Our declared business activity includes the trade in and repair of semi-trailers and
+            trailers (excluding caravans). This capability supports both our own logistics
+            operations and the wider transport-equipment market, and reflects the practical,
+            equipment-level knowledge that sits behind our services.
+          </p>
+
+          <h3>Chassis and Support Equipment</h3>
+          <p>
+            Container chassis, gensets for heated tank containers, and associated support
+            equipment complete the fleet picture. These items are positioned and maintained as
+            part of the operating cycle so that equipment is available where and when it is
+            needed.
+          </p>
+
+          <h2>Maintenance and Repair</h2>
+          <p>
+            Transport equipment used in chemical logistics is subject to wear, regulatory
+            inspection, and the demands of continuous service. Our equipment activities include
+            repair and maintenance coordination, so that units remain compliant and serviceable
+            throughout their operating life.
+          </p>
+
+          <div class="info-box">
+            <p><strong>Equipment knowledge from operation.</strong> Because we operate the
+            equipment we supply, we understand where failures occur and what specification
+            choices reduce downtime. That understanding informs both our leasing activities and
+            our repair services.</p>
+          </div>
+
+          <h2>Related Pages</h2>
+          <ul>
+            <li><a data-go="fleet/iso-tank-containers">ISO Tank Containers</a> — specifications and configurations</li>
+            <li><a data-go="services/leasing-trading">Leasing &amp; Trading</a> — equipment availability and commercial terms</li>
+            <li><a data-go="services/tank-container-logistics">Tank Container Logistics</a> — how equipment is deployed in service</li>
+          </ul>
+        </div>
+
+        <aside class="sidebar">
+          <div class="widget">
+            <h4>Our Fleet</h4>
+            <ul>
+              <li><a data-go="fleet">Fleet Overview</a></li>
+              <li><a data-go="fleet/iso-tank-containers">ISO Tank Containers</a></li>
+              <li><a data-go="fleet/intermodal-equipment" class="active">Intermodal Equipment</a></li>
+              <li><a data-go="fleet/global-network">Global Network</a></li>
+            </ul>
+          </div>
+          <div class="widget">
+            <h4>Equipment Range</h4>
+            <div class="fact"><span>Swap bodies</span><span>✓</span></div>
+            <div class="fact"><span>Road tankers</span><span>✓</span></div>
+            <div class="fact"><span>Semi-trailers</span><span>Trade &amp; repair</span></div>
+            <div class="fact"><span>Chassis &amp; gensets</span><span>✓</span></div>
+          </div>
+          <div class="widget dark">
+            <h4>Equipment Enquiry</h4>
+            <p>Looking for swap bodies, trailers, chassis, or repair services? Get in touch with
+               our equipment team.</p>
+            <a class="btn btn-light" data-go="contact">Contact Us</a>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     PAGE: GLOBAL NETWORK
+============================================================ -->
+<section class="page" data-page="fleet/global-network">
+  <div class="page-hero">
+    <div class="container">
+      <div class="inner">
+        <div class="breadcrumb">
+          <a data-go="home">Home</a><span class="sep">/</span>
+          <a data-go="fleet">Our Fleet</a><span class="sep">/</span>Global Network
+        </div>
+        <h1>Global Network</h1>
+        <p>An extensive international network of logistics facilities, anchored by a strategic
+           presence in the Port of Rotterdam transport hub.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-wrap bg-white">
+    <div class="container">
+      <div class="content-grid">
+        <div class="prose">
+          <p class="lead">
+            Through our international network, industry expertise, and logistics capabilities, we
+            provide reliable solutions for the storage, handling, transportation, and global
+            movement of bulk liquid cargo.
+          </p>
+
+          <figure class="content-image">
+            <div class="img-wrap">
+              <img src="images/image16.jpg" alt="Global bulk liquid logistics network — anchored by the Port of Rotterdam">
+            </div>
+            <figcaption>Global bulk liquid logistics network — anchored by the Port of Rotterdam</figcaption>
+          </figure>
+
+          <h2>Rotterdam: A Strategic Base</h2>
+          <p>
+            Buhold Intermodal B.V. maintains an active presence and strategic registration within
+            the Port of Rotterdam transport hub — one of Europe's major centers for international
+            logistics and liquid bulk transportation.
+          </p>
+          <p>
+            Rotterdam's significance is structural rather than incidental. It is Europe's largest
+            port, a deep-sea gateway for chemical and bulk liquid imports and exports, and the
+            entry point to an inland waterway network that reaches deep into the European
+            hinterland by barge. For a company whose business is bulk liquid logistics, this is
+            the natural place to be based.
+          </p>
+
+          <h2>Our Locations</h2>
+          <p>
+            Our head office is located at Louis Braillelaan 80, Ground Floor, 2719 EK Zoetermeer,
+            Netherlands. From here we coordinate storage, equipment, leasing, and logistics
+            activities across our network.
+          </p>
+          <p>
+            Our operations in the Rotterdam port area are located at
+            <strong>Moezelweg 161, 3198 LS Europoort Rotterdam, Netherlands</strong> — positioned
+            directly within the Europoort industrial complex, close to the deep-sea terminals,
+            tank farms, and barge connections that our bulk liquid activities depend on.
+          </p>
+
+          <h2>Network Coverage</h2>
+          <p>
+            Our extensive international network of logistics facilities and highly trained
+            professionals supports the handling and distribution of more than 3,000 different
+            chemical products annually. The network combines:
+          </p>
+          <ul class="checklist">
+            <li>Tank storage facilities for liquid chemical products</li>
+            <li>Tank container depots and cleaning facilities</li>
+            <li>Port and terminal handling capabilities</li>
+            <li>Inland waterway, rail, and road transport connections</li>
+            <li>International partner facilities supporting global movements</li>
+          </ul>
+
+          <h2>Connecting Modes</h2>
+          <p>
+            A network is only as useful as the connections between its nodes. From Rotterdam and
+            our partner locations, bulk liquid cargo moves by barge through the European inland
+            waterway system, by rail on long-distance inland routes, by road for collection and
+            final delivery, and by deep-sea vessel for intercontinental shipment.
+          </p>
+          <p>
+            This multimodal reach is what allows a single tank container to travel from a
+            production site in one country to a customer in another with minimal product handling
+            and a single coordinating party.
+          </p>
+
+          <div class="info-box">
+            <p><strong>Verified ITCO member.</strong> Our membership of the International Tank
+            Container Organisation supports our commitment to recognized industry standards,
+            regulatory compliance, operational safety, and responsible tank-container
+            transportation across our network.</p>
+          </div>
+
+          <h2>Working With Us Internationally</h2>
+          <p>
+            Whether you require storage in Europe, tank container equipment for a defined project,
+            or a coordinated multimodal movement to an overseas destination, our team can advise
+            on routing, equipment, and compliance requirements. Contact us to discuss your
+            requirements.
+          </p>
+        </div>
+
+        <aside class="sidebar">
+          <div class="widget">
+            <h4>Our Fleet</h4>
+            <ul>
+              <li><a data-go="fleet">Fleet Overview</a></li>
+              <li><a data-go="fleet/iso-tank-containers">ISO Tank Containers</a></li>
+              <li><a data-go="fleet/intermodal-equipment">Intermodal Equipment</a></li>
+              <li><a data-go="fleet/global-network" class="active">Global Network</a></li>
+            </ul>
+          </div>
+          <div class="widget">
+            <h4>Network Facts</h4>
+            <div class="fact"><span>Strategic hub</span><span>Port of Rotterdam</span></div>
+            <div class="fact"><span>Head office</span><span>Zoetermeer, NL</span></div>
+            <div class="fact"><span>Operations</span><span>Europoort, NL</span></div>
+            <div class="fact"><span>Products handled</span><span>3,000+</span></div>
+          </div>
+          <div class="widget dark">
+            <h4>Global Enquiry</h4>
+            <p>Tell us where your product needs to go — we will advise on routing and the
+               facilities available along the way.</p>
+            <a class="btn btn-light" data-go="contact">Contact Us</a>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     PAGE: SUSTAINABILITY
+============================================================ -->
+<section class="page" data-page="sustainability">
+  <div class="page-hero">
+    <div class="container">
+      <div class="inner">
+        <div class="breadcrumb"><a data-go="home">Home</a><span class="sep">/</span>Sustainability</div>
+        <h1>Sustainability</h1>
+        <p>Safety, quality, and operational efficiency — the foundation of responsible bulk liquid
+           logistics and of our commitment to the products, people, and environments we work with.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-wrap bg-white">
+    <div class="container">
+      <div class="content-grid">
+        <div class="prose">
+          <p class="lead">
+            With a strong commitment to safety, quality, and operational efficiency, Buhold
+            Intermodal B.V. ensures that chemical products are handled, stored, and transported in
+            accordance with applicable industry standards and requirements.
+          </p>
+
+          <h2>Safety as the First Principle</h2>
+          <p>
+            At Buhold Intermodal B.V., we leave nothing to chance when it comes to the safe and
+            secure handling of your valuable cargo. Our priority is to ensure that every shipment
+            arrives at its destination in the same condition as when it was entrusted to us.
+          </p>
+          <p>
+            Our highly trained team has extensive expertise in the safe handling, storage, and
+            transportation of chemical products. All on-site operations are supported by
+            experienced safety advisers and field supervisors who possess in-depth knowledge of
+            the specific chemicals we handle.
+          </p>
+
+          <h2>Regulatory Compliance</h2>
+          <p>
+            Our operations are conducted in strict accordance with applicable policies, legal
+            requirements, industry standards, and local regulations. This ensures that every
+            aspect of our services meets the highest standards — covering product handling,
+            storage conditions, transport documentation, and equipment certification.
+          </p>
+          <ul class="checklist">
+            <li>Applicable policies and legal requirements</li>
+            <li>Recognized industry standards</li>
+            <li>Local and national regulations</li>
+            <li>Modal dangerous goods requirements</li>
+            <li>Equipment inspection and certification regimes</li>
+          </ul>
+
+          <h2>Industry Membership and Standards</h2>
+          <p>
+            Buhold Intermodal B.V. is a verified member of the International Tank Container
+            Organisation (ITCO). This membership supports our commitment to recognized industry
+            standards, regulatory compliance, operational safety, and responsible tank-container
+            transportation.
+          </p>
+
+          <h2>Environmental Responsibility</h2>
+          <p>
+            Intermodal transport is inherently a lower-impact approach to moving bulk liquids. By
+            combining rail, barge, and sea with road transport — and by keeping product sealed
+            inside a tank container rather than handling it repeatedly — we reduce both handling
+            risk and the emissions associated with long-distance movement.
+          </p>
+          <p>
+            Our operational practices also focus on containment, spill prevention, correct waste
+            handling, and the efficient use of storage and transport capacity, so that resources
+            are used effectively rather than wasted on unnecessary movements.
+          </p>
+
+          <h2>Quality and Operational Efficiency</h2>
+          <p>
+            Quality in our business means the product arriving in the condition it left, the
+            documentation being correct, the equipment being suitable, and the operation running
+            to plan. Operational efficiency is not separate from this — it is how quality is
+            delivered consistently at scale.
+          </p>
+
+          <h2>Our People</h2>
+          <p>
+            Safety and quality ultimately depend on people. Our team includes trained operators,
+            safety advisers, and field supervisors with product-specific knowledge, supported by
+            ongoing attention to procedures and competence. Their expertise is the reason clients
+            entrust us with products that require informed handling.
+          </p>
+
+          <div class="info-box">
+            <p><strong>Our commitment:</strong> safe and reliable. We leave nothing to chance when
+            it comes to the safe and secure handling of your valuable cargo.</p>
+          </div>
+        </div>
+
+        <aside class="sidebar">
+          <div class="widget">
+            <h4>Explore</h4>
+            <ul>
+              <li><a data-go="about">About Us</a></li>
+              <li><a data-go="services">Our Services</a></li>
+              <li><a data-go="fleet">Our Fleet</a></li>
+              <li><a data-go="news">News &amp; Insights</a></li>
+            </ul>
+          </div>
+          <div class="widget">
+            <h4>Our Pillars</h4>
+            <div class="fact"><span>Safety</span><span>First principle</span></div>
+            <div class="fact"><span>Compliance</span><span>Strict adherence</span></div>
+            <div class="fact"><span>Quality</span><span>Product integrity</span></div>
+            <div class="fact"><span>Efficiency</span><span>Intermodal by design</span></div>
+          </div>
+          <div class="widget dark">
+            <h4>Questions About Compliance?</h4>
+            <p>If your product requires specific handling, storage, or documentation arrangements,
+               our team can review the requirements with you.</p>
+            <a class="btn btn-light" data-go="contact">Contact Us</a>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     PAGE: NEWS & INSIGHTS
+============================================================ -->
+<section class="page" data-page="news">
+  <div class="page-hero">
+    <div class="container">
+      <div class="inner">
+        <div class="breadcrumb"><a data-go="home">Home</a><span class="sep">/</span>News &amp; Insights</div>
+        <h1>News &amp; Insights</h1>
+        <p>Company news, industry perspective, and updates on tank storage, tank containers, and
+           bulk liquid logistics.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-wrap bg-white">
+    <div class="container">
+      <div class="grid-3">
+
+        <article class="news-card">
+          <div class="news-img">
+            <img src="images/image26.jpg" alt="ITCO Verified Membership">
+          </div>
+          <div class="news-body">
+            <div class="news-tag">Company News</div>
+            <h3>Buhold Intermodal Maintains ITCO Verified Membership</h3>
+            <p>Our continued membership of the International Tank Container Organisation
+               underscores our commitment to recognized industry standards, regulatory compliance,
+               operational safety, and responsible tank-container transportation.</p>
+            <div class="news-date">2026</div>
+          </div>
+        </article>
+
+        <article class="news-card">
+          <div class="news-img">
+            <img src="images/image27.jpg" alt="Rotterdam strategic base for bulk liquids">
+          </div>
+          <div class="news-body">
+            <div class="news-tag">Logistics</div>
+            <h3>Rotterdam: Why Our Strategic Base Matters for Bulk Liquids</h3>
+            <p>Our active presence and strategic registration within the Port of Rotterdam
+               transport hub places us at one of Europe's major centers for international
+               logistics and liquid bulk transportation.</p>
+            <div class="news-date">2026</div>
+          </div>
+        </article>
+
+        <article class="news-card">
+          <div class="news-img">
+            <img src="images/image28.jpg" alt="Handling 3,000+ chemical products">
+          </div>
+          <div class="news-body">
+            <div class="news-tag">Operations</div>
+            <h3>Handling 3,000+ Chemical Products a Year: What It Takes</h3>
+            <p>Handling more than 3,000 different chemical products annually — from high-quality
+               specialty chemicals to standard bulk liquids — requires more than capacity. It
+               requires product-specific knowledge and documented procedures.</p>
+            <div class="news-date">2026</div>
+          </div>
+        </article>
+
+        <article class="news-card">
+          <div class="news-img">
+            <img src="images/image29.jpg" alt="Why intermodal transport suits bulk liquid logistics">
+          </div>
+          <div class="news-body">
+            <div class="news-tag">Industry Insight</div>
+            <h3>Why Intermodal Transport Suits Bulk Liquid Logistics</h3>
+            <p>A tank container can move by road, rail, barge, and sea without the product inside
+               it being handled again. That single characteristic reduces handling risk and
+               simplifies the chain from production site to customer.</p>
+            <div class="news-date">2026</div>
+          </div>
+        </article>
+
+        <article class="news-card">
+          <div class="news-img">
+            <img src="images/image30.jpg" alt="Choosing the right tank container specification">
+          </div>
+          <div class="news-body">
+            <div class="news-tag">Equipment</div>
+            <h3>Choosing the Right Tank Container Specification</h3>
+            <p>Viscosity, density, corrosivity, temperature sensitivity, and hazardous
+               classification all influence which tank container specification is appropriate.
+               Selecting the wrong unit creates handling problems, delays, and compliance risk.</p>
+            <div class="news-date">2026</div>
+          </div>
+        </article>
+
+        <article class="news-card">
+          <div class="news-img">
+            <img src="images/image31.jpg" alt="Safety advisers and field supervisors">
+          </div>
+          <div class="news-body">
+            <div class="news-tag">Compliance</div>
+            <h3>Safety Advisers and Field Supervisors: Why Presence Matters</h3>
+            <p>The highest-risk moments in bulk liquid logistics are the transfers — filling,
+               discharging, connecting, sampling. Having experienced safety advisers on site
+               allows risks to be identified before work begins.</p>
+            <div class="news-date">2026</div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     PAGE: CONTACT US
+============================================================ -->
+<section class="page" data-page="contact">
+  <div class="page-hero">
+    <div class="container">
+      <div class="inner">
+        <div class="breadcrumb"><a data-go="home">Home</a><span class="sep">/</span>Contact Us</div>
+        <h1>Contact Buhold Intermodal B.V.</h1>
+        <p>If you need help finding specific services, email contacts, or tank container logistics
+           details related to Buhold Intermodal, our team is ready to assist.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-wrap bg-white">
+    <div class="container">
+      <div class="contact-grid">
+
+        <div>
+          <h2 class="section-title" style="font-size:1.5rem;margin-bottom:22px;">Contact Details</h2>
+
+          <div class="contact-item">
+            <div class="ci-icon">🏢</div>
+            <div class="ci-text">
+              <h4>Head Office</h4>
+              <p>Buhold Intermodal B.V.<br>
+                 Louis Braillelaan 80, Ground Floor<br>
+                 2719 EK Zoetermeer<br>
+                 Netherlands</p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="ci-icon">📍</div>
+            <div class="ci-text">
+              <h4>Europoort Location</h4>
+              <p>Moezelweg 161<br>
+                 3198 LS Europoort Rotterdam<br>
+                 Netherlands</p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="ci-icon">📞</div>
+            <div class="ci-text">
+              <h4>Telephone</h4>
+              <p><a href="tel:+31684268854">+31 6 84268854</a></p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="ci-icon">💬</div>
+            <div class="ci-text">
+              <h4>WhatsApp</h4>
+              <p><a href="https://wa.me/31684268854" target="_blank" rel="noopener">+31 6 84268854</a></p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="ci-icon">📠</div>
+            <div class="ci-text">
+              <h4>Fax</h4>
+              <p>+31 (0)79 7999555</p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="ci-icon">✉️</div>
+            <div class="ci-text">
+              <h4>Email — General Enquiries</h4>
+              <p><a href="mailto:info@buhold-intermodal.com">info@buhold-intermodal.com</a></p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="ci-icon">📋</div>
+            <div class="ci-text">
+              <h4>Email — Leasing &amp; Equipment</h4>
+              <p><a href="mailto:Lease@buhold-intermodal.com">Lease@buhold-intermodal.com</a></p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="ci-icon">🏛️</div>
+            <div class="ci-text">
+              <h4>Company Registration</h4>
+              <p>KvK Number (Dutch Chamber of Commerce): <strong>27223463</strong><br>
+                 Branch number: 000015943739<br>
+                 Legal form: Private Limited Company</p>
+            </div>
+          </div>
+
+          <div class="info-box" style="margin-top:30px;">
+            <p><strong>Enquiries welcome:</strong> tank storage, tank container logistics, bulk
+            liquid transport, cargo handling, equipment leasing and trading, or general company
+            information.</p>
+          </div>
+        </div>
+
+        <div>
+          <h2 class="section-title" style="font-size:1.5rem;margin-bottom:22px;">Send Us a Message</h2>
+
+          <form class="contact-form"
+                id="buholdContactForm"
+                action="https://formsubmit.co/info@buhold-intermodal.com"
+                method="POST">
+
+            <input type="text" name="name" placeholder="Your Name *" required>
+            <input type="email" name="email" placeholder="Your Email *" required>
+            <input type="text" name="company" placeholder="Company">
+            <input type="tel" name="phone" placeholder="Telephone">
+            <select name="topic" required>
+              <option value="">Select an enquiry topic *</option>
+              <option>Tank Storage</option>
+              <option>Tank Container Logistics</option>
+              <option>Bulk Liquid Transport</option>
+              <option>Cargo Handling</option>
+              <option>Leasing &amp; Trading</option>
+              <option>Intermodal Equipment</option>
+              <option>General Enquiry</option>
+            </select>
+            <textarea name="message" placeholder="Your Message *" required></textarea>
+
+            <input type="hidden" name="_subject" value="New enquiry from Buhold Intermodal website">
+            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_template" value="table">
+            <input type="text" name="_honey" style="display:none">
+
+            <button type="submit" class="btn btn-primary" id="submitBtn">Send Message</button>
+            <div class="form-status" id="formStatus" role="status" aria-live="polite"></div>
+          </form>
+
+          <div class="widget" style="margin-top:28px;">
+            <h4>Company Details</h4>
+            <div class="fact"><span>KvK number</span><span>27223463</span></div>
+            <div class="fact"><span>Branch number</span><span>000015943739</span></div>
+            <div class="fact"><span>Trade name</span><span>Buhold Intermodal BV</span></div>
+            <div class="fact"><span>ITCO</span><span>Verified member</span></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo" data-go="home">
+          <img class="footer-logo-img" src="footer.png" alt="Buhold Intermodal B.V.">
+        </div>
+        <p>Specialized logistics and storage service provider focused on the safe and efficient
+           transportation, handling, and storage of liquid chemical products. International
+           logistics and sales organization specializing in tank storage, tank container equipment,
+           and bulk liquid logistics solutions.</p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a data-go="services/tank-storage">Tank Storage</a></li>
+          <li><a data-go="services/tank-container-logistics">Tank Container Logistics</a></li>
+          <li><a data-go="services/bulk-liquid-transport">Bulk Liquid Transport</a></li>
+          <li><a data-go="services/cargo-handling">Cargo Handling</a></li>
+          <li><a data-go="services/leasing-trading">Leasing &amp; Trading</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a data-go="about">About Us</a></li>
+          <li><a data-go="fleet">Our Fleet</a></li>
+          <li><a data-go="fleet/iso-tank-containers">ISO Tank Containers</a></li>
+          <li><a data-go="fleet/global-network">Global Network</a></li>
+          <li><a data-go="sustainability">Sustainability</a></li>
+          <li><a data-go="news">News &amp; Insights</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="tel:+31684268854">+31 6 84268854</a></li>
+          <li><a href="https://wa.me/31684268854" target="_blank" rel="noopener">WhatsApp: +31 6 84268854</a></li>
+          <li><a href="mailto:info@buhold-intermodal.com">info@buhold-intermodal.com</a></li>
+          <li><a href="mailto:Lease@buhold-intermodal.com">Lease@buhold-intermodal.com</a></li>
+          <li>Head office: Louis Braillelaan 80, 2719 EK Zoetermeer</li>
+          <li>Europoort: Moezelweg 161, 3198 LS Europoort Rotterdam</li>
+          <li>Netherlands</li>
+          <li>KvK: 27223463</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div>© 2026 Buhold Intermodal B.V. All rights reserved. | KvK: 27223463 | ITCO Verified Member</div>
+      <div><a data-go="contact">Contact</a> &nbsp;|&nbsp; <a data-go="about">About</a></div>
+    </div>
+  </div>
+</footer>
+
+<!-- ================= WHATSAPP FLOATING BUTTON ================= -->
+<a class="whatsapp-float"
+   href="https://wa.me/31684268854"
+   target="_blank"
+   rel="noopener"
+   aria-label="Chat with Buhold Intermodal on WhatsApp"
+   title="Chat on WhatsApp">
+  <span class="wa-tooltip">Chat on WhatsApp</span>
+  <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+    <path d="M16.001 3.2c-7.06 0-12.8 5.74-12.8 12.8 0 2.26.6 4.47 1.73 6.42L3.2 28.8l6.56-1.72a12.75 12.75 0 0 0 6.24 1.6h.01c7.06 0 12.8-5.74 12.8-12.8 0-3.42-1.33-6.63-3.75-9.05a12.7 12.7 0 0 0-9.06-3.63zm0 23.04h-.01a10.6 10.6 0 0 1-5.4-1.48l-.39-.23-4.02 1.05 1.07-3.92-.25-.4a10.56 10.56 0 0 1-1.62-5.66c0-5.86 4.77-10.63 10.63-10.63 2.84 0 5.51 1.11 7.52 3.12a10.56 10.56 0 0 1 3.11 7.52c0 5.86-4.77 10.63-10.64 10.63zm5.83-7.96c-.32-.16-1.89-.93-2.18-1.04-.29-.11-.5-.16-.72.16-.21.32-.82 1.04-1.01 1.25-.19.21-.37.24-.69.08-.32-.16-1.35-.5-2.57-1.59-.95-.85-1.59-1.9-1.78-2.22-.19-.32-.02-.49.14-.65.14-.14.32-.37.48-.56.16-.19.21-.32.32-.53.11-.21.05-.4-.03-.56-.08-.16-.72-1.73-.99-2.37-.26-.62-.53-.54-.72-.55l-.61-.01c-.21 0-.56.08-.85.4-.29.32-1.11 1.09-1.11 2.65s1.14 3.08 1.3 3.29c.16.21 2.24 3.42 5.43 4.79.76.33 1.35.52 1.81.67.76.24 1.46.21 2.01.13.61-.09 1.89-.77 2.16-1.52.27-.75.27-1.39.19-1.52-.08-.13-.29-.21-.61-.37z"/>
+  </svg>
+</a>
+
+<!-- ================= NAV + SLIDER + LOADER + FORM ================= -->
+<script>
+(function () {
+  'use strict';
+
+  var navMenu      = document.getElementById('navMenu');
+  var mobileToggle = document.getElementById('mobileToggle');
+  var allPages     = document.querySelectorAll('.page');
+  var pageLoader   = document.getElementById('pageLoader');
+  var isLoading    = false;
+  var LOAD_DELAY   = 2000;
+
+  function isMobileNav() {
+    return window.matchMedia('(max-width: 860px)').matches;
+  }
+
+  function closeMobileMenu() {
+    navMenu.classList.remove('open');
+    var openItems = navMenu.querySelectorAll('li.open');
+    for (var i = 0; i < openItems.length; i++) openItems[i].classList.remove('open');
+  }
+
+  function showPage(route) {
+    if (!route) { route = 'home'; }
+    var found = false, i, page, pageRoute;
+
+    for (i = 0; i < allPages.length; i++) {
+      page = allPages[i];
+      pageRoute = page.getAttribute('data-page');
+      if (pageRoute === route) { page.classList.add('active'); found = true; }
+      else page.classList.remove('active');
+    }
+    if (!found) {
+      for (i = 0; i < allPages.length; i++) {
+        if (allPages[i].getAttribute('data-page') === 'home') {
+          allPages[i].classList.add('active'); break;
+        }
+      }
+      route = 'home';
+    }
+
+    var allGoLinks = document.querySelectorAll('[data-go]');
+    for (i = 0; i < allGoLinks.length; i++) {
+      var linkRoute = allGoLinks[i].getAttribute('data-go');
+      var isActive = (linkRoute === route) ||
+                     (linkRoute !== 'home' && route.indexOf(linkRoute + '/') === 0);
+      if (isActive) allGoLinks[i].classList.add('active');
+      else allGoLinks[i].classList.remove('active');
+    }
+
+    try {
+      if (window.location.hash !== '#/' + route) {
+        history.replaceState(null, '', '#/' + route);
+      }
+    } catch (err) {}
+
+    closeMobileMenu();
+    window.scrollTo(0, 0);
+  }
+
+  function navigateWithLoader(route) {
+    if (isLoading) return;
+    if (!route) route = 'home';
+    isLoading = true;
+    pageLoader.classList.add('active');
+    pageLoader.setAttribute('aria-hidden', 'false');
+    var bar = pageLoader.querySelector('.loader-bar span');
+    if (bar) { var n = bar.cloneNode(true); bar.parentNode.replaceChild(n, bar); }
+    setTimeout(function () {
+      showPage(route);
+      pageLoader.classList.remove('active');
+      pageLoader.setAttribute('aria-hidden', 'true');
+      isLoading = false;
+    }, LOAD_DELAY);
+  }
+
+  document.addEventListener('click', function (e) {
+    var target = e.target, link = null;
+    while (target && target !== document) {
+      if (target.nodeType === 1 && target.hasAttribute && target.hasAttribute('data-go')) {
+        link = target; break;
+      }
+      target = target.parentNode;
+    }
+    if (!link) return;
+
+    if (isMobileNav() && link.classList.contains('parent-toggle')) {
+      e.preventDefault();
+      var parentLi = link.parentNode;
+      if (parentLi && parentLi.tagName === 'LI') {
+        var siblings = parentLi.parentNode.children;
+        for (var s = 0; s < siblings.length; s++) {
+          if (siblings[s] !== parentLi) siblings[s].classList.remove('open');
+        }
+        parentLi.classList.toggle('open');
+      }
+      return;
+    }
+    e.preventDefault();
+    navigateWithLoader(link.getAttribute('data-go'));
+  });
+
+  mobileToggle.addEventListener('click', function () {
+    var willOpen = !navMenu.classList.contains('open');
+    navMenu.classList.toggle('open');
+    if (!willOpen) {
+      var openItems = navMenu.querySelectorAll('li.open');
+      for (var i = 0; i < openItems.length; i++) openItems[i].classList.remove('open');
+    }
+  });
+
+  var mq = window.matchMedia('(max-width: 860px)');
+  function handleMqChange(e) {
+    if (!e.matches) {
+      var o = navMenu.querySelectorAll('li.open');
+      for (var i = 0; i < o.length; i++) o[i].classList.remove('open');
+      navMenu.classList.remove('open');
+    }
+  }
+  if (mq.addEventListener) mq.addEventListener('change', handleMqChange);
+  else if (mq.addListener) mq.addListener(handleMqChange);
+
+  function getRouteFromHash() {
+    var hash = window.location.hash || '';
+    hash = hash.replace(/^#\/?/, ''); hash = hash.replace(/\/+$/, '');
+    return hash || 'home';
+  }
+  showPage(getRouteFromHash());
+  window.addEventListener('hashchange', function () { showPage(getRouteFromHash()); });
+  window.addEventListener('popstate', function () { showPage(getRouteFromHash()); });
+
+  /* HERO SLIDER */
+  var slider = document.getElementById('heroSlider');
+  if (slider) {
+    var slides  = slider.querySelectorAll('.slide');
+    var dots    = slider.querySelectorAll('.dot');
+    var prevBtn = slider.querySelector('.slider-btn.prev');
+    var nextBtn = slider.querySelector('.slider-btn.next');
+    var current = 0, timer = null, DELAY = 5000;
+
+    function goTo(index) {
+      current = (index + slides.length) % slides.length;
+      for (var i = 0; i < slides.length; i++) {
+        if (i === current) slides[i].classList.add('active');
+        else slides[i].classList.remove('active');
+      }
+      for (var j = 0; j < dots.length; j++) {
+        if (j === current) dots[j].classList.add('active');
+        else dots[j].classList.remove('active');
+      }
+    }
+    function next() { goTo(current + 1); }
+    function prev() { goTo(current - 1); }
+    function start() { stop(); timer = setInterval(next, DELAY); }
+    function stop() { if (timer) { clearInterval(timer); timer = null; } }
+
+    nextBtn.addEventListener('click', function () { next(); start(); });
+    prevBtn.addEventListener('click', function () { prev(); start(); });
+    for (var d = 0; d < dots.length; d++) {
+      (function (dot) {
+        dot.addEventListener('click', function () {
+          goTo(parseInt(dot.getAttribute('data-slide'), 10)); start();
+        });
+      })(dots[d]);
+    }
+    slider.addEventListener('mouseenter', stop);
+    slider.addEventListener('mouseleave', start);
+
+    var touchStartX = 0;
+    slider.addEventListener('touchstart', function (e) {
+      touchStartX = e.changedTouches[0].screenX; stop();
+    }, { passive: true });
+    slider.addEventListener('touchend', function (e) {
+      var diff = e.changedTouches[0].screenX - touchStartX;
+      if (Math.abs(diff) > 40) { if (diff < 0) next(); else prev(); }
+      start();
+    }, { passive: true });
+
+    start();
+  }
+
+  /* CONTACT FORM — FormSubmit AJAX */
+  var contactForm = document.getElementById('buholdContactForm');
+  var formStatus  = document.getElementById('formStatus');
+  var submitBtn   = document.getElementById('submitBtn');
+
+  if (contactForm && formStatus && submitBtn) {
+    contactForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      formStatus.className = 'form-status';
+      formStatus.textContent = '';
+
+      if (!contactForm.checkValidity()) {
+        formStatus.className = 'form-status error';
+        formStatus.textContent = 'Please fill in all required fields.';
+        contactForm.reportValidity();
+        return;
+      }
+
+      var formData = new FormData(contactForm);
+
+      submitBtn.disabled = true;
+      var originalText = submitBtn.textContent;
+      submitBtn.textContent = 'Sending…';
+
+      fetch('https://formsubmit.co/ajax/info@buhold-intermodal.com', {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: formData
+      })
+      .then(function (response) {
+        if (!response.ok) throw new Error('Network response was not ok');
+        return response.json();
+      })
+      .then(function (data) {
+        formStatus.className = 'form-status success';
+        formStatus.innerHTML =
+          '✓ <strong>Thank you!</strong> Your message has been sent to ' +
+          '<strong>info@buhold-intermodal.com</strong>. ' +
+          'Our team will get back to you shortly.';
+        contactForm.reset();
+
+        setTimeout(function () {
+          formStatus.className = 'form-status';
+          formStatus.textContent = '';
+        }, 8000);
+      })
+      .catch(function (error) {
+        formStatus.className = 'form-status error';
+        formStatus.innerHTML =
+          '✗ <strong>Sorry, something went wrong.</strong> ' +
+          'Please try again, or email us directly at ' +
+          '<a href="mailto:info@buhold-intermodal.com" style="color:#991b1b;text-decoration:underline;">' +
+          'info@buhold-intermodal.com</a>.';
+      })
+      .finally(function () {
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalText;
+      });
+    });
+  }
+})();
+</script>
+
+</body>
+</html>
